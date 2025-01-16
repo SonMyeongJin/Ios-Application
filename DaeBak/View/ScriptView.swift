@@ -12,6 +12,16 @@ struct ScriptView: View {
     
     var body: some View {
         VStack{
+            
+            if let videoID = extractVideoID(from: script.youtube_url) {
+                           // YouTube Player
+                           YoutubeView(videoID: videoID)
+                               .frame(height: 200) // 플레이어 크기 설정
+                       } else {
+                           Text("Invalid YouTube URL")
+                               .foregroundColor(.red)
+                       }
+            
             Text("Title")
                 .font(.headline)
             TextField("Enter title", text: $script.title)
@@ -34,6 +44,15 @@ struct ScriptView: View {
         .padding()
         .navigationTitle("Script Details")
     }
+    
+    // YouTube URL에서 videoID 추출 함수
+        private func extractVideoID(from url: String) -> String? {
+            guard let components = URLComponents(string: url),
+                  let queryItems = components.queryItems else {
+                return nil
+            }
+            return queryItems.first(where: { $0.name == "v" })?.value
+        }
 }
 
 #Preview {

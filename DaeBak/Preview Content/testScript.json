@@ -2,11 +2,13 @@
     {
         "title": "Test Title 1",
         "script_KOR": "안녕하세요",
-        "script_JPN": "こんにちは"
+        "script_JPN": "こんにちは",
+        "youtube_url": "https://www.youtube.com/watch?v=ThhKlp1t_PU"
     },
     {
         "title": "Test Title 2",
         "script_KOR": "반갑습니다",
-        "script_JPN": "はじめまして"
+        "script_JPN": "はじめまして",
+        "youtube_url": "https://www.youtube.com/watch?v=juM_qadVY1E"
     }
 ]
