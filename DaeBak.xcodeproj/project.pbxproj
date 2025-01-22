@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CB524FA22D40F7B900794AB4 /* DetailPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB524F932D40F7B900794AB4 /* DetailPage.swift */; };
+		CB524FA32D40F7B900794AB4 /* Script.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB524F952D40F7B900794AB4 /* Script.swift */; };
+		CB524FA42D40F7B900794AB4 /* ScriptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB524F9A2D40F7B900794AB4 /* ScriptView.swift */; };
+		CB524FA52D40F7B900794AB4 /* YoutubeTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB524F9B2D40F7B900794AB4 /* YoutubeTest.swift */; };
+		CB524FA62D40F7B900794AB4 /* DaeBakApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB524F9F2D40F7B900794AB4 /* DaeBakApp.swift */; };
+		CB524FA72D40F7B900794AB4 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB524F972D40F7B900794AB4 /* Preview Assets.xcassets */; };
+		CB524FA82D40F7B900794AB4 /* testScript.json in Resources */ = {isa = PBXBuildFile; fileRef = CB524F982D40F7B900794AB4 /* testScript.json */; };
+		CB524FA92D40F7B900794AB4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB524F9D2D40F7B900794AB4 /* Assets.xcassets */; };
 		CB7834942D395772006D8379 /* YouTubePlayerKit in Frameworks */ = {isa = PBXBuildFile; productRef = CB7834932D395772006D8379 /* YouTubePlayerKit */; };
 /* End PBXBuildFile section */
 
@@ -28,30 +36,22 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CB524F932D40F7B900794AB4 /* DetailPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPage.swift; sourceTree = "<group>"; };
+		CB524F952D40F7B900794AB4 /* Script.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Script.swift; sourceTree = "<group>"; };
+		CB524F972D40F7B900794AB4 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		CB524F982D40F7B900794AB4 /* testScript.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = testScript.json; sourceTree = "<group>"; };
+		CB524F9A2D40F7B900794AB4 /* ScriptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptView.swift; sourceTree = "<group>"; };
+		CB524F9B2D40F7B900794AB4 /* YoutubeTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubeTest.swift; sourceTree = "<group>"; };
+		CB524F9D2D40F7B900794AB4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		CB524F9E2D40F7B900794AB4 /* DaeBak.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DaeBak.entitlements; sourceTree = "<group>"; };
+		CB524F9F2D40F7B900794AB4 /* DaeBakApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaeBakApp.swift; sourceTree = "<group>"; };
+		CB524FA02D40F7B900794AB4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CBC69AC22D3516EA0007B350 /* DaeBak.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DaeBak.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CBC69AD62D3516EB0007B350 /* DaeBakTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DaeBakTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CBC69AE02D3516EB0007B350 /* DaeBakUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DaeBakUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		CBC69AE82D3516EB0007B350 /* Exceptions for "DaeBak" folder in "DaeBak" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Info.plist,
-			);
-			target = CBC69AC12D3516EA0007B350 /* DaeBak */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		CBC69AC42D3516EA0007B350 /* DaeBak */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				CBC69AE82D3516EB0007B350 /* Exceptions for "DaeBak" folder in "DaeBak" target */,
-			);
-			path = DaeBak;
-			sourceTree = "<group>";
-		};
 		CBC69AD92D3516EB0007B350 /* DaeBakTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = DaeBakTests;
@@ -90,10 +90,59 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CB524F942D40F7B900794AB4 /* MainView */ = {
+			isa = PBXGroup;
+			children = (
+				CB524F932D40F7B900794AB4 /* DetailPage.swift */,
+			);
+			path = MainView;
+			sourceTree = "<group>";
+		};
+		CB524F962D40F7B900794AB4 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				CB524F952D40F7B900794AB4 /* Script.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		CB524F992D40F7B900794AB4 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				CB524F972D40F7B900794AB4 /* Preview Assets.xcassets */,
+				CB524F982D40F7B900794AB4 /* testScript.json */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		CB524F9C2D40F7B900794AB4 /* ViewSource */ = {
+			isa = PBXGroup;
+			children = (
+				CB524F9A2D40F7B900794AB4 /* ScriptView.swift */,
+				CB524F9B2D40F7B900794AB4 /* YoutubeTest.swift */,
+			);
+			path = ViewSource;
+			sourceTree = "<group>";
+		};
+		CB524FA12D40F7B900794AB4 /* DaeBak */ = {
+			isa = PBXGroup;
+			children = (
+				CB524F962D40F7B900794AB4 /* Model */,
+				CB524F942D40F7B900794AB4 /* MainView */,
+				CB524F9C2D40F7B900794AB4 /* ViewSource */,
+				CB524F992D40F7B900794AB4 /* Preview Content */,
+				CB524F9D2D40F7B900794AB4 /* Assets.xcassets */,
+				CB524F9E2D40F7B900794AB4 /* DaeBak.entitlements */,
+				CB524F9F2D40F7B900794AB4 /* DaeBakApp.swift */,
+				CB524FA02D40F7B900794AB4 /* Info.plist */,
+			);
+			path = DaeBak;
+			sourceTree = "<group>";
+		};
 		CBC69AB92D3516EA0007B350 = {
 			isa = PBXGroup;
 			children = (
-				CBC69AC42D3516EA0007B350 /* DaeBak */,
+				CB524FA12D40F7B900794AB4 /* DaeBak */,
 				CBC69AD92D3516EB0007B350 /* DaeBakTests */,
 				CBC69AE32D3516EB0007B350 /* DaeBakUITests */,
 				CBC69AC32D3516EA0007B350 /* Products */,
@@ -124,9 +173,6 @@
 			buildRules = (
 			);
 			dependencies = (
-			);
-			fileSystemSynchronizedGroups = (
-				CBC69AC42D3516EA0007B350 /* DaeBak */,
 			);
 			name = DaeBak;
 			packageProductDependencies = (
@@ -234,6 +280,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CB524FA72D40F7B900794AB4 /* Preview Assets.xcassets in Resources */,
+				CB524FA82D40F7B900794AB4 /* testScript.json in Resources */,
+				CB524FA92D40F7B900794AB4 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,6 +307,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CB524FA22D40F7B900794AB4 /* DetailPage.swift in Sources */,
+				CB524FA32D40F7B900794AB4 /* Script.swift in Sources */,
+				CB524FA42D40F7B900794AB4 /* ScriptView.swift in Sources */,
+				CB524FA52D40F7B900794AB4 /* YoutubeTest.swift in Sources */,
+				CB524FA62D40F7B900794AB4 /* DaeBakApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

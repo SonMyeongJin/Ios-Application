@@ -8,7 +8,7 @@
 import SwiftUI
 import YouTubePlayerKit
 
-struct Test: View {
+struct YoutubeTest: View {
 
     @StateObject
     var youTubePlayer: YouTubePlayer = "https://www.youtube.com/watch?v=f-8vau3NfMY"
