@@ -11,9 +11,9 @@ import SwiftData
 @Model
 class Script {
     var title: String
-    var script_KOR: String = "null"
-    var script_JPN: String = "null"
-    var youtube_url: String = ""
+    var script_KOR: String
+    var script_JPN: String
+    var youtube_url: String
 
     init(title: String, script_KOR: String = "null", script_JPN: String = "null", youtube_url: String = "") {
         self.title = title
@@ -21,7 +21,29 @@ class Script {
         self.script_JPN = script_JPN
         self.youtube_url = youtube_url
     }
-    
+
+    // 각 줄을 시간 스탬프와 텍스트로 나눈 배열 (한국어)
+    var timeStampedKOR: [(time: String, text: String)] {
+        parseScript(script_KOR)
+    }
+
+    // 각 줄을 시간 스탬프와 텍스트로 나눈 배열 (일본어)
+    var timeStampedJPN: [(time: String, text: String)] {
+        parseScript(script_JPN)
+    }
+
+    // 시간 스탬프 파싱 함수
+    private func parseScript(_ script: String) -> [(time: String, text: String)] {
+        let lines = script.components(separatedBy: "\n") // 줄 단위로 분리
+        return lines.compactMap { line in
+            guard let range = line.range(of: "\\[\\d{1,2}:\\d{2}\\]", options: .regularExpression),
+                  !range.isEmpty else { return nil }
+            let time = String(line[range]) // 시간 스탬프 추출
+            let text = line.replacingOccurrences(of: time, with: "").trimmingCharacters(in: .whitespaces)
+            return (time, text)
+        }
+    }
+
     // JSON 파일에서 데이터 읽기 함수
     static func loadFromJSON(fileName: String) -> [Script] {
         guard let url = Bundle.main.url(forResource: fileName, withExtension: "json") else {

@@ -15,24 +15,49 @@ struct ScriptView: View {
     var body: some View {
         VStack{
             
-            Test()
-            
-            Text("Title")
-                .font(.headline)
-            TextField("Enter title", text: $script.title)
+            Text(script.title)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
+                .font(.headline)
                 .padding()
             
-            Text("한국어 자막")
-                .font(.headline)
-            TextEditor(text: $script.script_KOR)
-                .border(Color.gray,width: 1)
-                .frame(height: 100)
+            Test()
             
-            Text("일본어 자막")
-            TextEditor(text: $script.script_JPN)
-                .border(Color.gray, width: 1)
-                .frame(height: 100)
+            Text("자막")
+                .font(.headline)
+            
+            ScrollView{
+                ForEach(0..<max(script.timeStampedKOR.count, script.timeStampedJPN.count), id: \.self) { index in
+                    HStack(alignment: .top, spacing: 8) {
+                        // 한국어 자막
+                        if script.timeStampedKOR.indices.contains(index) {
+                            VStack(alignment: .leading) {
+                                Text(script.timeStampedKOR[index].time) // 시간 스탬프
+                                    .font(.subheadline)
+                                    .foregroundColor(.gray)
+                                Text(script.timeStampedKOR[index].text) // 한국어 텍스트
+                                    .foregroundColor(.blue)
+                            }
+                        }
+                        
+                        Spacer()
+                        
+                        // 일본어 자막
+                        if script.timeStampedJPN.indices.contains(index) {
+                            VStack(alignment: .trailing) {
+                                Text(script.timeStampedJPN[index].time) // 시간 스탬프
+                                    .font(.subheadline)
+                                    .foregroundColor(.gray)
+                                Text(script.timeStampedJPN[index].text) // 일본어 텍스트
+                                    .foregroundColor(.red)
+                            }
+                        }
+                    }
+                    .padding(.vertical, 4)
+                }
+                .padding()
+            }
+            .frame(height : 400)
+            .border(Color.gray, width: 1)
             
             Spacer()
         }
