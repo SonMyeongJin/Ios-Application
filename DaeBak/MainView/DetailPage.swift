@@ -20,7 +20,7 @@ struct DetailPage: View {
                 .font(.headline)
                 .padding()
             
-            YoutubeTest()
+            YoutubeView(youtubeURL: script.youtube_url)
             
             Text("자막")
                 .font(.headline)
