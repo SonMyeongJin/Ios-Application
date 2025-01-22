@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import YouTubePlayerKit
+
 
 struct ScriptView: View {
     @State var script: Script
@@ -13,14 +15,7 @@ struct ScriptView: View {
     var body: some View {
         VStack{
             
-            if let videoID = extractVideoID(from: script.youtube_url) {
-                           // YouTube Player
-                           YoutubeView(videoID: videoID)
-                               .frame(height: 200) // 플레이어 크기 설정
-                       } else {
-                           Text("Invalid YouTube URL")
-                               .foregroundColor(.red)
-                       }
+            Test()
             
             Text("Title")
                 .font(.headline)
@@ -36,8 +31,8 @@ struct ScriptView: View {
             
             Text("일본어 자막")
             TextEditor(text: $script.script_JPN)
-                            .border(Color.gray, width: 1)
-                            .frame(height: 100)
+                .border(Color.gray, width: 1)
+                .frame(height: 100)
             
             Spacer()
         }
@@ -46,19 +41,19 @@ struct ScriptView: View {
     }
     
     // YouTube URL에서 videoID 추출 함수
-        private func extractVideoID(from url: String) -> String? {
-            guard let components = URLComponents(string: url),
-                  let queryItems = components.queryItems else {
-                return nil
-            }
-            return queryItems.first(where: { $0.name == "v" })?.value
+    private func extractVideoID(from url: String) -> String? {
+        guard let components = URLComponents(string: url),
+              let queryItems = components.queryItems else {
+            return nil
         }
+        return queryItems.first(where: { $0.name == "v" })?.value
+    }
 }
 
 #Preview {
     let testScripts = Script.loadFromJSON(fileName: "testScript")
-       guard let firstScript = testScripts.first else {
-           fatalError("테스트 JSON 파일에서 데이터를 읽어오지 못했습니다.")
-       }
-       return ScriptView(script: firstScript)
+    guard let firstScript = testScripts.first else {
+        fatalError("테스트 JSON 파일에서 데이터를 읽어오지 못했습니다.")
+    }
+    return ScriptView(script: firstScript)
 }

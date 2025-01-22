@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		CB7834942D395772006D8379 /* YouTubePlayerKit in Frameworks */ = {isa = PBXBuildFile; productRef = CB7834932D395772006D8379 /* YouTubePlayerKit */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		CBC69AD72D3516EB0007B350 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -65,6 +69,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CB7834942D395772006D8379 /* YouTubePlayerKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,6 +130,7 @@
 			);
 			name = DaeBak;
 			packageProductDependencies = (
+				CB7834932D395772006D8379 /* YouTubePlayerKit */,
 			);
 			productName = DaeBak;
 			productReference = CBC69AC22D3516EA0007B350 /* DaeBak.app */;
@@ -209,6 +215,7 @@
 			mainGroup = CBC69AB92D3516EA0007B350;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
+				CB7834922D395772006D8379 /* XCRemoteSwiftPackageReference "YouTubePlayerKit" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = CBC69AC32D3516EA0007B350 /* Products */;
@@ -610,6 +617,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		CB7834922D395772006D8379 /* XCRemoteSwiftPackageReference "YouTubePlayerKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SvenTiigi/YouTubePlayerKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.9.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		CB7834932D395772006D8379 /* YouTubePlayerKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CB7834922D395772006D8379 /* XCRemoteSwiftPackageReference "YouTubePlayerKit" */;
+			productName = YouTubePlayerKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = CBC69ABA2D3516EA0007B350 /* Project object */;
 }
