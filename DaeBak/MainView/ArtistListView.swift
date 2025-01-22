@@ -8,18 +8,14 @@
 import SwiftUI
 
 struct ArtistListView: View {
+    let scripts: [Script] = Script.loadFromJSON(fileName: "testScript")
+
     var body: some View {
         NavigationView {
             List(Artist.allCases) { artist in
-                NavigationLink(destination: Text("\(artist.description)의 영상 목록")) {
-                    HStack {
-                        // 이미지를 표시하려면 AsyncImage 사용 가능
-                        Text(artist.rawValue)
-                            .font(.headline)
-                        Spacer()
-                        Text(artist.description)
-                            .foregroundColor(.gray)
-                    }
+                NavigationLink(destination: ScriptListView(artist: artist, allScripts: scripts)) {
+                    Text(artist.rawValue)
+                        .font(.headline)
                 }
             }
             .navigationTitle("가수 목록")
