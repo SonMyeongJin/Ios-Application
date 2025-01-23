@@ -25,26 +25,6 @@ struct ScriptListView: View {
 }
 
 #Preview {
-    // 테스트용 Artist
-    let testArtist = Artist.BTS
-    
-    // 테스트용 Script 데이터
-    let testScripts = [
-        Script(
-            title: "Dynamite",
-            script_KOR: "[0:05] 안녕하세요",
-            script_JPN: "[0:05] こんにちは",
-            youtube_url: "https://www.youtube.com/watch?v=gdZLi9oWNZg",
-            artist: "BTS"
-        ),
-        Script(
-            title: "Butter",
-            script_KOR: "[0:10] 반갑습니다",
-            script_JPN: "[0:10] はじめまして",
-            youtube_url: "https://www.youtube.com/watch?v=WMweEpGlu_U",
-            artist: "BTS"
-        )
-    ]
-    
-    return ScriptListView(artist: testArtist, allScripts: testScripts)
+    let scripts: [Script] = Script.loadFromJSON(fileName: "testScript")
+    return ScriptListView(artist: .BTS, allScripts: scripts)
 }
