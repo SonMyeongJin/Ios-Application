@@ -11,16 +11,20 @@ struct ArtistListView: View {
     let scripts: [Script] = Script.loadFromJSON(fileName: "testScript")
 
     var body: some View {
-        NavigationStack {
-            List(Artist.allCases) { artist in
-                NavigationLink(destination: ScriptListView(artist: artist, allScripts: scripts)) {
-                    Text(artist.rawValue)
-                        .font(.headline)
-                }
-            }
-            .navigationTitle("가수 목록")
-        }
-    }
+           NavigationView {
+               ScrollView {
+                   LazyVGrid(columns: [GridItem(.adaptive(minimum: 120))], spacing: 50) {
+                       ForEach(Artist.allCases) { artist in
+                           NavigationLink(destination: ScriptListView(artist: artist, allScripts: scripts)) {
+                               MarkView(artist: artist)
+                           }
+                       }
+                   }
+                   .padding()
+               }
+               .navigationTitle("가수 목록")
+           }
+       }
 }
 
 #Preview {
