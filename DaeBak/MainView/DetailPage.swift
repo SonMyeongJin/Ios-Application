@@ -50,3 +50,12 @@ struct DetailPage: View {
     }
     return DetailPage(script: firstScript)
 }
+
+#Preview("Second Script Preview") {
+    let testScripts = Script.loadFromJSON(fileName: "testScript")
+    guard testScripts.indices.contains(1) else {
+        fatalError("테스트 JSON 파일에서 두 번째 데이터를 읽어오지 못했습니다.")
+    }
+    return DetailPage(script: testScripts[1])
+}
+
