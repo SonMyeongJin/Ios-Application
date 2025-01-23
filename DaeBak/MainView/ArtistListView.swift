@@ -11,7 +11,7 @@ struct ArtistListView: View {
     let scripts: [Script] = Script.loadFromJSON(fileName: "testScript")
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             List(Artist.allCases) { artist in
                 NavigationLink(destination: ScriptListView(artist: artist, allScripts: scripts)) {
                     Text(artist.rawValue)

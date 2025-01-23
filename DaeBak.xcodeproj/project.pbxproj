@@ -101,9 +101,9 @@
 		CB524F942D40F7B900794AB4 /* MainView */ = {
 			isa = PBXGroup;
 			children = (
-				CB524F932D40F7B900794AB4 /* DetailPage.swift */,
 				CB524FAB2D40F9AA00794AB4 /* ArtistListView.swift */,
 				CB524FAF2D4155C500794AB4 /* ScriptListView.swift */,
+				CB524F932D40F7B900794AB4 /* DetailPage.swift */,
 			);
 			path = MainView;
 			sourceTree = "<group>";
