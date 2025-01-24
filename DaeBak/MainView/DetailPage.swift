@@ -30,7 +30,7 @@ struct DetailPage: View {
             Spacer()
         }
         .padding()
-       // .navigationTitle("Script Details")
+        //.navigationTitle("")
     }
     
     // YouTube URL에서 videoID 추출 함수

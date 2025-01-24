@@ -14,33 +14,32 @@ struct ScriptListView: View {
     var body: some View {
         let filteredScripts = Script.scripts(for: artist.rawValue, from: allScripts)
         
-        NavigationStack{
-            List(filteredScripts) { script in
-                NavigationLink(destination: DetailPage(script: script)) { // DetailPage로 이동
-                    HStack {
-                        // 썸네일 이미지
-                        if let videoID = extractVideoID(from: script.youtube_url) {
-                            AsyncImage(url: URL(string: "https://img.youtube.com/vi/\(videoID)/hqdefault.jpg")) { image in
-                                image
-                                    .resizable()
-                                    .scaledToFill()
-                                    .frame(width: 80, height: 45)
-                                    .cornerRadius(5)
-                            } placeholder: {
-                                ProgressView() // 로딩 중 표시
-                            }
-                        } else {
-                            Rectangle()
-                                .fill(Color.gray.opacity(0.3))
+        
+        List(filteredScripts) { script in
+            NavigationLink(destination: DetailPage(script: script)) { // DetailPage로 이동
+                HStack {
+                    // 썸네일 이미지
+                    if let videoID = extractVideoID(from: script.youtube_url) {
+                        AsyncImage(url: URL(string: "https://img.youtube.com/vi/\(videoID)/hqdefault.jpg")) { image in
+                            image
+                                .resizable()
+                                .scaledToFill()
                                 .frame(width: 80, height: 45)
                                 .cornerRadius(5)
+                        } placeholder: {
+                            ProgressView() // 로딩 중 표시
                         }
-                        
-                        // 스크립트 제목
-                        Text(script.title)
-                            .font(.headline)
-                            .padding(.leading, 8)
+                    } else {
+                        Rectangle()
+                            .fill(Color.gray.opacity(0.3))
+                            .frame(width: 80, height: 45)
+                            .cornerRadius(5)
                     }
+                    
+                    // 스크립트 제목
+                    Text(script.title)
+                        .font(.headline)
+                        .padding(.leading, 8)
                 }
             }
         }
