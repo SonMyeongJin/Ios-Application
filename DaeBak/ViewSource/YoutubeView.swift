@@ -9,7 +9,7 @@ import SwiftUI
 import YouTubePlayerKit
 
 struct YoutubeView: View {
-    let youtubeURL: String // URL을 전달받기 위해 프로퍼티 추가
+    let youtubeURL: String
     @StateObject private var youTubePlayer = YouTubePlayer("")
 
     var body: some View {
@@ -26,10 +26,11 @@ struct YoutubeView: View {
                 }
             }
             .onAppear {
+                youTubePlayer.update(configuration: .init(autoPlay: false)) // 자동 재생 끄기
                 self.youTubePlayer.source = .url(youtubeURL) // URL 설정
             }
         }
-        .frame(height: 200) // 플레이어 크기 설정
+        .frame(height: 200)
     }
 }
 
