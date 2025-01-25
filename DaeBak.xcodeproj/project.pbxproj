@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CB3F62902D44CC2B00F51318 /* TitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3F628F2D44CC2B00F51318 /* TitleView.swift */; };
 		CB524FA22D40F7B900794AB4 /* DetailPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB524F932D40F7B900794AB4 /* DetailPage.swift */; };
 		CB524FA32D40F7B900794AB4 /* Script.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB524F952D40F7B900794AB4 /* Script.swift */; };
 		CB524FA42D40F7B900794AB4 /* ScriptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB524F9A2D40F7B900794AB4 /* ScriptView.swift */; };
-		CB524FA52D40F7B900794AB4 /* YoutubeTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB524F9B2D40F7B900794AB4 /* YoutubeTest.swift */; };
 		CB524FA62D40F7B900794AB4 /* DaeBakApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB524F9F2D40F7B900794AB4 /* DaeBakApp.swift */; };
 		CB524FA72D40F7B900794AB4 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB524F972D40F7B900794AB4 /* Preview Assets.xcassets */; };
 		CB524FA82D40F7B900794AB4 /* testScript.json in Resources */ = {isa = PBXBuildFile; fileRef = CB524F982D40F7B900794AB4 /* testScript.json */; };
@@ -41,12 +41,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CB3F628F2D44CC2B00F51318 /* TitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleView.swift; sourceTree = "<group>"; };
 		CB524F932D40F7B900794AB4 /* DetailPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPage.swift; sourceTree = "<group>"; };
 		CB524F952D40F7B900794AB4 /* Script.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Script.swift; sourceTree = "<group>"; };
 		CB524F972D40F7B900794AB4 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		CB524F982D40F7B900794AB4 /* testScript.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = testScript.json; sourceTree = "<group>"; };
 		CB524F9A2D40F7B900794AB4 /* ScriptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptView.swift; sourceTree = "<group>"; };
-		CB524F9B2D40F7B900794AB4 /* YoutubeTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubeTest.swift; sourceTree = "<group>"; };
 		CB524F9D2D40F7B900794AB4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CB524F9E2D40F7B900794AB4 /* DaeBak.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DaeBak.entitlements; sourceTree = "<group>"; };
 		CB524F9F2D40F7B900794AB4 /* DaeBakApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaeBakApp.swift; sourceTree = "<group>"; };
@@ -134,7 +134,7 @@
 				CB524F9A2D40F7B900794AB4 /* ScriptView.swift */,
 				CB524FB12D415AE800794AB4 /* YoutubeView.swift */,
 				CB524FB32D42460000794AB4 /* MarkView.swift */,
-				CB524F9B2D40F7B900794AB4 /* YoutubeTest.swift */,
+				CB3F628F2D44CC2B00F51318 /* TitleView.swift */,
 			);
 			path = ViewSource;
 			sourceTree = "<group>";
@@ -328,10 +328,10 @@
 				CB524FA42D40F7B900794AB4 /* ScriptView.swift in Sources */,
 				CB524FAC2D40F9AA00794AB4 /* ArtistListView.swift in Sources */,
 				CB524FB02D4155C500794AB4 /* ScriptListView.swift in Sources */,
-				CB524FA52D40F7B900794AB4 /* YoutubeTest.swift in Sources */,
 				CB524FB42D42460000794AB4 /* MarkView.swift in Sources */,
 				CB524FA62D40F7B900794AB4 /* DaeBakApp.swift in Sources */,
 				CB524FAE2D40FA3D00794AB4 /* Artist.swift in Sources */,
+				CB3F62902D44CC2B00F51318 /* TitleView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
