@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		CB3F62902D44CC2B00F51318 /* TitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3F628F2D44CC2B00F51318 /* TitleView.swift */; };
+		CB3F62922D44D6B100F51318 /* FavoritesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3F62912D44D6A300F51318 /* FavoritesManager.swift */; };
 		CB524FA22D40F7B900794AB4 /* DetailPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB524F932D40F7B900794AB4 /* DetailPage.swift */; };
 		CB524FA32D40F7B900794AB4 /* Script.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB524F952D40F7B900794AB4 /* Script.swift */; };
 		CB524FA42D40F7B900794AB4 /* ScriptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB524F9A2D40F7B900794AB4 /* ScriptView.swift */; };
@@ -42,6 +43,7 @@
 
 /* Begin PBXFileReference section */
 		CB3F628F2D44CC2B00F51318 /* TitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleView.swift; sourceTree = "<group>"; };
+		CB3F62912D44D6A300F51318 /* FavoritesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesManager.swift; sourceTree = "<group>"; };
 		CB524F932D40F7B900794AB4 /* DetailPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPage.swift; sourceTree = "<group>"; };
 		CB524F952D40F7B900794AB4 /* Script.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Script.swift; sourceTree = "<group>"; };
 		CB524F972D40F7B900794AB4 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -113,6 +115,7 @@
 		CB524F962D40F7B900794AB4 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				CB3F62912D44D6A300F51318 /* FavoritesManager.swift */,
 				CB524FAD2D40FA3200794AB4 /* Artist.swift */,
 				CB524F952D40F7B900794AB4 /* Script.swift */,
 			);
@@ -323,6 +326,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CB524FA22D40F7B900794AB4 /* DetailPage.swift in Sources */,
+				CB3F62922D44D6B100F51318 /* FavoritesManager.swift in Sources */,
 				CB524FB22D415AE800794AB4 /* YoutubeView.swift in Sources */,
 				CB524FA32D40F7B900794AB4 /* Script.swift in Sources */,
 				CB524FA42D40F7B900794AB4 /* ScriptView.swift in Sources */,

@@ -10,6 +10,7 @@ import SwiftUI
 struct ScriptListView: View {
     let artist: Artist
     let allScripts: [Script]
+    @State private var favorites: [String] = FavoritesManager.loadFavorites()
     
     var body: some View {
         let filteredScripts = Script.scripts(for: artist.rawValue, from: allScripts)
@@ -40,6 +41,17 @@ struct ScriptListView: View {
                     Text(script.title)
                         .font(.headline)
                         .padding(.leading, 8)
+                    
+                
+                    // 즐겨찾기 버튼
+                    Button(action: {
+                        FavoritesManager.toggleFavorite(for: script.title) // 즐겨찾기 상태 변경
+                        favorites = FavoritesManager.loadFavorites() // 상태 업데이트
+                    }) {
+                        Image(systemName: FavoritesManager.isFavorite(scriptID: script.title) ? "heart.fill" : "heart")
+                            .foregroundColor(FavoritesManager.isFavorite(scriptID: script.title) ? .red : .gray)
+                    }
+                    .buttonStyle(BorderlessButtonStyle()) // 버튼과 리스트 선택 분리
                 }
             }
         }
