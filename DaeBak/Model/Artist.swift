@@ -11,6 +11,9 @@ enum Artist: String, CaseIterable, Identifiable {
     case BTS
     case ASTRO
     case SEVENTEEN
+    case LESSERAFIM
+    case AESPA
+    case BLACKPINK
 
     var id: String { self.rawValue } // Identifiable을 위한 id
     
@@ -20,15 +23,9 @@ enum Artist: String, CaseIterable, Identifiable {
         case .BTS: return "방탄소년단"
         case .ASTRO: return "아스트로"
         case .SEVENTEEN: return "세븐틴"
-        }
-    }
-
-    // 추가 속성: 대표 이미지 URL (필요시)
-    var imageURL: String {
-        switch self {
-        case .BTS: return "https://example.com/bts.jpg"
-        case .ASTRO: return "https://example.com/blackpink.jpg"
-        case .SEVENTEEN: return "https://example.com/seventeen.jpg"
+        case .LESSERAFIM: return "르세라핌"
+        case .AESPA: return "에스파"
+        case .BLACKPINK: return "블랙핑크"
         }
     }
 }
