@@ -155,9 +155,9 @@
 				CB524F942D40F7B900794AB4 /* MainView */,
 				CB524F9C2D40F7B900794AB4 /* ViewSource */,
 				CB524F992D40F7B900794AB4 /* Preview Content */,
+				CB524F9F2D40F7B900794AB4 /* DaeBakApp.swift */,
 				CB524F9D2D40F7B900794AB4 /* Assets.xcassets */,
 				CB524F9E2D40F7B900794AB4 /* DaeBak.entitlements */,
-				CB524F9F2D40F7B900794AB4 /* DaeBakApp.swift */,
 				CB524FA02D40F7B900794AB4 /* Info.plist */,
 			);
 			path = DaeBak;

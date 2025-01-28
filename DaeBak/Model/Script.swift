@@ -38,7 +38,7 @@ class Script {
     private func parseScript(_ script: String) -> [(time: String, text: String)] {
         let lines = script.components(separatedBy: "\n") // 줄 단위로 분리
         return lines.compactMap { line in
-            guard let range = line.range(of: "\\[\\d{1,2}:\\d{2}\\]", options: .regularExpression),
+            guard let range = line.range(of: "\\(\\d{1,2}:\\d{2}\\)", options: .regularExpression),
                   !range.isEmpty else { return nil }
             let time = String(line[range]) // 시간 스탬프 추출
             let text = line.replacingOccurrences(of: time, with: "").trimmingCharacters(in: .whitespaces)
