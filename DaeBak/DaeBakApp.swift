@@ -12,7 +12,7 @@ import SwiftData
 struct DaeBakApp: App {
     var body: some Scene {
         WindowGroup {
-            ArtistListView() // 간단한 초기 화면
+            StartLoadingView()
         }
     }
 }

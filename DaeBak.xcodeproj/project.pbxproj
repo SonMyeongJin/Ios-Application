@@ -24,6 +24,7 @@
 		CB524FB42D42460000794AB4 /* MarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB524FB32D42460000794AB4 /* MarkView.swift */; };
 		CB6337F62D48C3DE00E20BA9 /* TimestampView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6337F52D48C3DE00E20BA9 /* TimestampView.swift */; };
 		CB7834942D395772006D8379 /* YouTubePlayerKit in Frameworks */ = {isa = PBXBuildFile; productRef = CB7834932D395772006D8379 /* YouTubePlayerKit */; };
+		CBF97A3D2D4E188F007FC41A /* StartLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF97A3C2D4E188F007FC41A /* StartLoadingView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +66,7 @@
 		CBC69AC22D3516EA0007B350 /* DaeBak.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DaeBak.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CBC69AD62D3516EB0007B350 /* DaeBakTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DaeBakTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CBC69AE02D3516EB0007B350 /* DaeBakUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DaeBakUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CBF97A3C2D4E188F007FC41A /* StartLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartLoadingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -112,6 +114,7 @@
 				CB524FAB2D40F9AA00794AB4 /* ArtistListView.swift */,
 				CB524FAF2D4155C500794AB4 /* ScriptListView.swift */,
 				CB524F932D40F7B900794AB4 /* DetailPage.swift */,
+				CBF97A3C2D4E188F007FC41A /* StartLoadingView.swift */,
 			);
 			path = MainView;
 			sourceTree = "<group>";
@@ -335,6 +338,7 @@
 				CB3F62922D44D6B100F51318 /* FavoritesManager.swift in Sources */,
 				CB3F62962D44DEE400F51318 /* ScriptRowView.swift in Sources */,
 				CB524FB22D415AE800794AB4 /* YoutubeView.swift in Sources */,
+				CBF97A3D2D4E188F007FC41A /* StartLoadingView.swift in Sources */,
 				CB524FA32D40F7B900794AB4 /* Script.swift in Sources */,
 				CB524FA42D40F7B900794AB4 /* ScriptView.swift in Sources */,
 				CB524FAC2D40F9AA00794AB4 /* ArtistListView.swift in Sources */,
