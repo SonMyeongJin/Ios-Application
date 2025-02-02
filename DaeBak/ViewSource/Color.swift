@@ -22,7 +22,7 @@ struct LoadingBackground: ViewModifier {
 struct GlobalBackground: ViewModifier {
     func body(content: Content) -> some View {
         ZStack {
-            Color(red: 68 / 255, green: 28 / 255, blue: 4 / 255, opacity: 0.8)
+            Color(red: 143 / 255, green: 119 / 255, blue: 104 / 255)
                 .edgesIgnoringSafeArea(.all)
             content
         }

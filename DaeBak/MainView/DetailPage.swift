@@ -31,6 +31,7 @@ struct DetailPage: View {
         }
         .padding()
         //.navigationTitle("")
+        .globalBackground()
     }
     
     // YouTube URL에서 videoID 추출 함수

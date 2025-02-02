@@ -24,6 +24,7 @@ struct MarkView: View {
             Text(artist.rawValue)
                 .font(.headline)
                 .contentColor()
+                .shadow(color: .black.opacity(0.5), radius: 3, x: 2, y: 2)
         }
     }
 }

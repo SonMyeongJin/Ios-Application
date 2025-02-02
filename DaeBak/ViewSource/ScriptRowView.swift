@@ -40,6 +40,7 @@ struct ScriptRowView: View {
             Text(script.title)
                 .font(.headline)
                 .padding(.leading, 8)
+                .titleColor()
 
             Spacer()
 
