@@ -23,12 +23,13 @@ struct MarkView: View {
                 .shadow(radius: 5)
             Text(artist.rawValue)
                 .font(.headline)
+                .contentColor()
         }
     }
 }
 
 #Preview {
-
+    
     MarkView(artist: .ASTRO)
     MarkView(artist: .SEVENTEEN)
     MarkView(artist: .BTS)

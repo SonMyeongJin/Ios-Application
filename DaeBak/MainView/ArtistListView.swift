@@ -26,7 +26,7 @@ struct ArtistListView: View {
                     }
                     .padding()
                 }
-            }
+            }.globalBackground()
         }
     }
 }

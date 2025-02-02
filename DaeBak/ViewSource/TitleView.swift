@@ -14,9 +14,9 @@ struct TitleView: View {
         Text(title)
             .font(.largeTitle)
             .fontWeight(Font.Weight.bold)
-            .foregroundStyle(.pink)
             .shadow(color: .black.opacity(0.5), radius: 3, x: 2, y: 2)
             .multilineTextAlignment(.center)
+            .titleColor()
     }
 }
 

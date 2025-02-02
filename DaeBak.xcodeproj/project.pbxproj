@@ -25,6 +25,7 @@
 		CB6337F62D48C3DE00E20BA9 /* TimestampView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6337F52D48C3DE00E20BA9 /* TimestampView.swift */; };
 		CB7834942D395772006D8379 /* YouTubePlayerKit in Frameworks */ = {isa = PBXBuildFile; productRef = CB7834932D395772006D8379 /* YouTubePlayerKit */; };
 		CBF97A3D2D4E188F007FC41A /* StartLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF97A3C2D4E188F007FC41A /* StartLoadingView.swift */; };
+		CBF97A4B2D4F163E007FC41A /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF97A4A2D4F163E007FC41A /* Color.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +68,7 @@
 		CBC69AD62D3516EB0007B350 /* DaeBakTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DaeBakTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CBC69AE02D3516EB0007B350 /* DaeBakUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DaeBakUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CBF97A3C2D4E188F007FC41A /* StartLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartLoadingView.swift; sourceTree = "<group>"; };
+		CBF97A4A2D4F163E007FC41A /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -147,6 +149,7 @@
 				CB524FB32D42460000794AB4 /* MarkView.swift */,
 				CB3F628F2D44CC2B00F51318 /* TitleView.swift */,
 				CB6337F52D48C3DE00E20BA9 /* TimestampView.swift */,
+				CBF97A4A2D4F163E007FC41A /* Color.swift */,
 			);
 			path = ViewSource;
 			sourceTree = "<group>";
@@ -341,6 +344,7 @@
 				CBF97A3D2D4E188F007FC41A /* StartLoadingView.swift in Sources */,
 				CB524FA32D40F7B900794AB4 /* Script.swift in Sources */,
 				CB524FA42D40F7B900794AB4 /* ScriptView.swift in Sources */,
+				CBF97A4B2D4F163E007FC41A /* Color.swift in Sources */,
 				CB524FAC2D40F9AA00794AB4 /* ArtistListView.swift in Sources */,
 				CB524FB02D4155C500794AB4 /* ScriptListView.swift in Sources */,
 				CB524FB42D42460000794AB4 /* MarkView.swift in Sources */,
