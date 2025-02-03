@@ -40,7 +40,7 @@ struct ScriptRowView: View {
             Text(script.title)
                 .font(.headline)
                 .padding(.leading, 8)
-                .titleColor()
+                .foregroundColor(Color(red: 156 / 255, green: 102 / 255, blue: 68 / 255))
 
             Spacer()
 

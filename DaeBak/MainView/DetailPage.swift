@@ -19,13 +19,16 @@ struct DetailPage: View {
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .font(.headline)
                 .padding()
+                .titleColor()
             
             YoutubeView(youtubeURL: script.youtube_url)
             
             Text("자막")
                 .font(.headline)
+                .titleColor()
             
             ScriptView(script: script)
+                .border(Color.gray, width: 6)
             
             Spacer()
         }

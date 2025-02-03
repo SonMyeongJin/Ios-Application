@@ -18,7 +18,7 @@ struct ScriptListView: View {
             NavigationLink(destination: DetailPage(script: script)) {
                 ScriptRowView(script: script)
             }
-            .listRowBackground(Color(red: 68 / 255, green: 28 / 255, blue: 4 / 255))
+            .listRowBackground(Color(red: 205 / 255, green: 190 / 255, blue: 176 / 255))
         }
         .navigationTitle("\(artist.rawValue)의 스크립트 목록")
         .scrollContentBackground(.hidden)

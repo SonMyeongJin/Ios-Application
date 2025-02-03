@@ -29,6 +29,17 @@ struct GlobalBackground: ViewModifier {
     }
 }
 
+// 목록, 스크립트 부분 베이지 색
+struct ScriptBackground: ViewModifier {
+    func body(content: Content) -> some View {
+        ZStack {
+            Color(red: 205 / 255, green: 190 / 255, blue: 176 / 255)
+                .edgesIgnoringSafeArea(.all)
+            content
+        }
+    }
+}
+
 // 제목 글씨 색상
 struct TitleColor: ViewModifier {
     func body(content: Content) -> some View {
@@ -59,5 +70,8 @@ extension View {
     }
     func contentColor() -> some View {
         self.modifier(ContentColor())
+    }
+    func scriptBackground() -> some View {
+        self.modifier(ScriptBackground())
     }
 }

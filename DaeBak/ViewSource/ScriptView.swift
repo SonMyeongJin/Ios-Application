@@ -42,17 +42,17 @@ struct ScriptView: View {
             }
             .padding()
         }
-        
         .frame(height : 400)
-        .border(Color.gray, width: 1)
-        
+        // .border(Color.gray, width: 1)
+        .scriptBackground()
     }
 }
 
 #Preview {
     let testScripts = Script.loadFromJSON(fileName: "testScript")
-    guard let firstScript = testScripts.first else {
-        fatalError("테스트 JSON 파일에서 데이터를 읽어오지 못했습니다.")
+    guard testScripts.count > 1 else {
+        fatalError("테스트 JSON 파일에 두 번째 데이터가 없습니다.")
     }
-    return ScriptView(script: firstScript)
+    return ScriptView(script: testScripts[1])
 }
+
