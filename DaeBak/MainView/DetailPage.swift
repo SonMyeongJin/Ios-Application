@@ -16,16 +16,34 @@ struct DetailPage: View {
         VStack{
             
             Text(script.title)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .font(.headline)
-                .padding()
-                .titleColor()
+                   .font(.largeTitle)
+                   .fontWeight(.bold)
+                   .foregroundColor(Color(red: 156 / 255, green: 102 / 255, blue: 68 / 255))
+                   .multilineTextAlignment(.center)
+                   .padding(.horizontal)
+                   .frame(maxWidth: .infinity)
+                   .background(
+                       RoundedRectangle(cornerRadius: 10)
+                           .fill(Color(red: 205 / 255, green: 190 / 255, blue: 176 / 255))
+                           .padding(.horizontal, 20)
+                           .shadow(color: .black.opacity(0.5), radius: 5, x: 0, y: 2)
+                   )
+            
             
             YoutubeView(youtubeURL: script.youtube_url)
             
             Text("자막")
                 .font(.headline)
-                .titleColor()
+                .foregroundColor(Color(red: 156 / 255, green: 102 / 255, blue: 68 / 255))
+                .multilineTextAlignment(.center)
+                .padding(.horizontal)
+                .frame(maxWidth: .maximum(30, 130))
+                .background(
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(Color(red: 205 / 255, green: 190 / 255, blue: 176 / 255))
+                        .padding(.horizontal, 20)
+                        .shadow(color: .black.opacity(0.5), radius: 5, x: 0, y: 2)
+                )
             
             ScriptView(script: script)
                 .border(Color.gray, width: 6)

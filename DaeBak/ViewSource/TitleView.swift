@@ -11,9 +11,15 @@ struct TitleView: View {
     let title: String
     
     var body: some View {
+        Image("Mark") 
+            .resizable()
+            .scaledToFit()
+            .frame(width: 100, height: 100)
+            .padding(.bottom, -20)
+        
         Text(title)
             .font(.largeTitle)
-            .fontWeight(Font.Weight.bold)
+            .fontWeight(.bold)
             .shadow(color: .black.opacity(0.5), radius: 6, x: 4, y: 4)
             .multilineTextAlignment(.center)
             .titleColor()
