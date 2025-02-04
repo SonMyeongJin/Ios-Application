@@ -46,6 +46,36 @@ class Script {
         }
     }
     
+    // 시간 스탬프와 초로 변환하는 함수
+    var timeStamps: [(time: String, seconds: Double)] {
+        parseTimestamp(script_KOR)
+    }
+    
+    // 타임스탬프 파싱 함수
+    private func parseTimestamp(_ script: String) -> [(time: String, seconds: Double)] {
+        let regex = "\\((\\d{1,2}):(\\d{2})\\)"  // `(MM:SS)` 형식
+        let pattern = try? NSRegularExpression(pattern: regex, options: [])
+        let nsString = script as NSString
+        let results = pattern?.matches(in: script, options: [], range: NSRange(location: 0, length: nsString.length))
+        
+        var timeStamps: [(time: String, seconds: Double)] = []
+        
+        results?.forEach { match in
+            // 시간 스탬프 추출
+            let time = nsString.substring(with: match.range)
+            // 분과 초를 추출하여 초로 변환
+            if let minuteRange = Range(match.range(at: 1), in: script),
+               let secondRange = Range(match.range(at: 2), in: script) {
+                let minutes = Double(script[minuteRange]) ?? 0
+                let seconds = Double(script[secondRange]) ?? 0
+                let totalSeconds = minutes * 60 + seconds
+                timeStamps.append((time: time, seconds: totalSeconds))
+            }
+        }
+        
+        return timeStamps
+    }
+    
     // JSON 파일에서 데이터 읽기 함수
     static func loadFromJSON(fileName: String) -> [Script] {
         guard let url = Bundle.main.url(forResource: fileName, withExtension: "json") else {
