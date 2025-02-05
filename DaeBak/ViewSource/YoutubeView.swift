@@ -10,7 +10,7 @@ import YouTubePlayerKit
 
 struct YoutubeView: View {
     let youtubeURL: String
-    @StateObject private var youTubePlayer = YouTubePlayer("")
+    @ObservedObject var youTubePlayer: YouTubePlayer // 외부에서 주입받은 YouTubePlayer
 
     var body: some View {
         VStack {
@@ -34,10 +34,10 @@ struct YoutubeView: View {
     }
 }
 
-#Preview {
-    let scripts = Script.loadFromJSON(fileName: "testScript")
-    guard let firstScript = scripts.first else {
-        fatalError("testScript.json에서 데이터를 불러올 수 없습니다.")
-    }
-    return YoutubeView(youtubeURL: firstScript.youtube_url)
-}
+//#Preview {
+//    let scripts = Script.loadFromJSON(fileName: "testScript")
+//    guard let firstScript = scripts.first else {
+//        fatalError("testScript.json에서 데이터를 불러올 수 없습니다.")
+//    }
+//    return YoutubeView(youtubeURL: firstScript.youtube_url)
+//}

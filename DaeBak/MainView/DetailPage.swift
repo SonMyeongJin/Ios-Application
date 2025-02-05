@@ -11,26 +11,26 @@ import YouTubePlayerKit
 
 struct DetailPage: View {
     @State var script: Script
-    
+    @StateObject private var youTubePlayer = YouTubePlayer("") // YouTubePlayer 인스턴스 생성
+
     var body: some View {
-        VStack{
-            
+        VStack {
             Text(script.title)
-                   .font(.largeTitle)
-                   .fontWeight(.bold)
-                   .foregroundColor(Color(red: 156 / 255, green: 102 / 255, blue: 68 / 255))
-                   .multilineTextAlignment(.center)
-                   .padding(.horizontal)
-                   .frame(maxWidth: .infinity)
-                   .background(
-                       RoundedRectangle(cornerRadius: 10)
-                           .fill(Color(red: 205 / 255, green: 190 / 255, blue: 176 / 255))
-                           .padding(.horizontal, 20)
-                           .shadow(color: .black.opacity(0.5), radius: 5, x: 0, y: 2)
-                   )
+                .font(.largeTitle)
+                .fontWeight(.bold)
+                .foregroundColor(Color(red: 156 / 255, green: 102 / 255, blue: 68 / 255))
+                .multilineTextAlignment(.center)
+                .padding(.horizontal)
+                .frame(maxWidth: .infinity)
+                .background(
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(Color(red: 205 / 255, green: 190 / 255, blue: 176 / 255))
+                        .padding(.horizontal, 20)
+                        .shadow(color: .black.opacity(0.5), radius: 5, x: 0, y: 2)
+                )
             
-            
-            YoutubeView(youtubeURL: script.youtube_url)
+            // YouTubePlayer 인스턴스를 YoutubeView에 전달
+            YoutubeView(youtubeURL: script.youtube_url, youTubePlayer: youTubePlayer)
             
             Text("자막")
                 .font(.headline)
@@ -45,16 +45,15 @@ struct DetailPage: View {
                         .shadow(color: .black.opacity(0.5), radius: 5, x: 0, y: 2)
                 )
             
-            ScriptView(script: script)
+            // YouTubePlayer 인스턴스를 ScriptView에 전달
+            ScriptView(script: script, youTubePlayer: youTubePlayer)
                 .border(Color.gray, width: 6)
             
             Spacer()
         }
         .padding()
-        //.navigationTitle("")
         .globalBackground()
     }
-    
     // YouTube URL에서 videoID 추출 함수
     private func extractVideoID(from url: String) -> String? {
         guard let components = URLComponents(string: url),

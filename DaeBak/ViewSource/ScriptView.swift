@@ -10,8 +10,8 @@ import YouTubePlayerKit
 
 struct ScriptView: View {
     @State var script: Script
-    @StateObject private var youTubePlayer: YouTubePlayer = "https://youtube.com/watch?v=psL_5RIBqnY"
-    
+    @ObservedObject var youTubePlayer: YouTubePlayer // 외부에서 주입받은 YouTubePlayer
+
     var body: some View {
         ScrollView {
             ForEach(0..<max(script.timeStampedKOR.count, script.timeStampedJPN.count), id: \.self) { index in
@@ -69,11 +69,11 @@ struct ScriptView: View {
     }
 }
 
-#Preview {
-    let testScripts = Script.loadFromJSON(fileName: "testScript")
-    guard testScripts.count > 1 else {
-        fatalError("테스트 JSON 파일에 두 번째 데이터가 없습니다.")
-    }
-    return ScriptView(script: testScripts[1])
-}
+//#Preview {
+//    let testScripts = Script.loadFromJSON(fileName: "testScript")
+//    guard testScripts.count > 1 else {
+//        fatalError("테스트 JSON 파일에 두 번째 데이터가 없습니다.")
+//    }
+//    return ScriptView(script: testScripts[1])
+//}
 
