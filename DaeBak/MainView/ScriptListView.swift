@@ -30,6 +30,7 @@ struct ScriptListView: View {
                         Label("모든 목록", systemImage: "list.bullet")
                     }
                     .tag(Tab.allScripts)
+             
                 
                 // 즐겨찾기 목록 탭
                 ListView(scripts: FavoritesManager.favoriteScripts(from: allScripts))
@@ -54,7 +55,8 @@ struct ScriptListView: View {
                     ScriptRowView(script: script)
                 }
                 .listRowBackground(Color(red: 205 / 255, green: 190 / 255, blue: 176 / 255))
-            }
+            }       .scrollContentBackground(.hidden)
+                .globalBackground()
         }
     }
 }
