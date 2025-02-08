@@ -35,4 +35,9 @@ struct FavoritesManager {
     static func loadFavorites() -> [String] {
         return UserDefaults.standard.stringArray(forKey: key) ?? []
     }
+    
+    // 즐겨찾기된 스크립트만 필터링하는 메서드
+      static func favoriteScripts(from scripts: [Script]) -> [Script] {
+          return scripts.filter { isFavorite(scriptID: $0.title) }
+      }
 }
