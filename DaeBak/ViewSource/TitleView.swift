@@ -23,6 +23,14 @@ struct TitleView: View {
             .shadow(color: .black.opacity(0.5), radius: 6, x: 4, y: 4)
             .multilineTextAlignment(.center)
             .titleColor()
+            .padding(.horizontal)
+            .frame(maxWidth: .infinity)
+            .background(
+                RoundedRectangle(cornerRadius: 10)
+                    .fill(Color(red: 68 / 255, green: 28 / 255, blue: 4 / 255))
+                    .padding(.horizontal, 20)
+                    .shadow(color: .black.opacity(0.5), radius: 5, x: 0, y: 2)
+            )
     }
 }
 
