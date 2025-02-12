@@ -8,7 +8,6 @@
 import Foundation
 import SwiftData
 
-@Model
 class Script: Identifiable, ObservableObject {
     var id = UUID()
     var title: String
@@ -26,7 +25,6 @@ class Script: Identifiable, ObservableObject {
     }
     
     /// 상세 정보 호출 시 사용할 파일명을 결정하는 computed property
-    /// (여기서는 youtube_url에 포함된 특정 문자열을 기준으로 파일명을 매핑합니다)
     var detailFileName: String {
         if youtube_url.contains("6xz1bay-6dQ") {
             return "BTS_2.json"
@@ -43,49 +41,73 @@ class Script: Identifiable, ObservableObject {
     
     // MARK: - 스크립트 파싱 (시간 스탬프 포함)
     
-    /// 각 줄을 시간 스탬프와 텍스트로 나눈 배열 (한국어)
+    // 정규식 객체 미리 생성 (재사용)
+    static let timeStampRegex: NSRegularExpression = {
+        return try! NSRegularExpression(pattern: "\\(\\d{1,2}:\\d{2}\\)", options: [])
+    }()
+    
+    static let timeRegex: NSRegularExpression = {
+        return try! NSRegularExpression(pattern: "\\((\\d{1,2}):(\\d{2})\\)", options: [])
+    }()
+    
+    // **저장 프로퍼티**에 lazy 적용 (캐싱)
+    private lazy var cachedTimeStampedKOR: [(time: String, text: String)] = {
+        return self.parseScript(self.script_KOR)
+    }()
+    
+    private lazy var cachedTimeStampedJPN: [(time: String, text: String)] = {
+        return self.parseScript(self.script_JPN)
+    }()
+    
+    private lazy var cachedTimeStamps: [(time: String, seconds: Double)] = {
+        return self.parseTimestamp(self.script_KOR)
+    }()
+    
+    // computed property (lazy 키워드 없이)로 캐싱된 값을 반환
     var timeStampedKOR: [(time: String, text: String)] {
-        parseScript(script_KOR)
+        return cachedTimeStampedKOR
     }
     
-    /// 각 줄을 시간 스탬프와 텍스트로 나눈 배열 (일본어)
     var timeStampedJPN: [(time: String, text: String)] {
-        parseScript(script_JPN)
+        return cachedTimeStampedJPN
+    }
+    
+    var timeStamps: [(time: String, seconds: Double)] {
+        return cachedTimeStamps
     }
     
     /// 스크립트 문자열에서 (MM:SS) 형태의 시간 스탬프를 찾아 분리합니다.
     private func parseScript(_ script: String) -> [(time: String, text: String)] {
         let lines = script.components(separatedBy: "\n")
         return lines.compactMap { line in
-            guard let range = line.range(of: "\\(\\d{1,2}:\\d{2}\\)", options: .regularExpression),
-                  !range.isEmpty else { return nil }
-            let time = String(line[range])
-            let text = line.replacingOccurrences(of: time, with: "").trimmingCharacters(in: .whitespaces)
-            return (time, text)
+            let nsLine = line as NSString
+            let range = NSRange(location: 0, length: nsLine.length)
+            guard let match = Script.timeStampRegex.firstMatch(in: line, options: [], range: range) else {
+                return nil
+            }
+            if let swiftRange = Range(match.range, in: line) {
+                let time = String(line[swiftRange])
+                let text = line.replacingOccurrences(of: time, with: "").trimmingCharacters(in: .whitespaces)
+                return (time, text)
+            }
+            return nil
         }
-    }
-    
-    /// 스크립트 내 시간 스탬프를 초 단위로 변환한 배열
-    var timeStamps: [(time: String, seconds: Double)] {
-        parseTimestamp(script_KOR)
     }
     
     /// `(MM:SS)` 형태의 시간 스탬프를 초로 변환합니다.
     private func parseTimestamp(_ script: String) -> [(time: String, seconds: Double)] {
-        let regex = "\\((\\d{1,2}):(\\d{2})\\)"
-        let pattern = try? NSRegularExpression(pattern: regex, options: [])
         let nsString = script as NSString
-        let results = pattern?.matches(in: script, options: [], range: NSRange(location: 0, length: nsString.length))
+        let results = Script.timeRegex.matches(in: script, options: [], range: NSRange(location: 0, length: nsString.length))
         
         var timeStamps: [(time: String, seconds: Double)] = []
-        results?.forEach { match in
-            let time = nsString.substring(with: match.range)
+        for match in results {
+            let timeString = nsString.substring(with: match.range)
             if let minuteRange = Range(match.range(at: 1), in: script),
                let secondRange = Range(match.range(at: 2), in: script) {
                 let minutes = Double(script[minuteRange]) ?? 0
                 let seconds = Double(script[secondRange]) ?? 0
                 let totalSeconds = minutes * 60 + seconds
-                timeStamps.append((time: time, seconds: totalSeconds))
+                timeStamps.append((time: timeString, seconds: totalSeconds))
             }
         }
         return timeStamps
@@ -176,7 +198,8 @@ class Script: Identifiable, ObservableObject {
                 return
             }
             do {
-                let dsArray = try JSONDecoder().decode([DecodableScript].self, from: data)
+                let decoder = JSONDecoder()
+                let dsArray = try decoder.decode([DecodableScript].self, from: data)
                 let scripts = dsArray.map { ds in
                     Script(
                         title: ds.title,
@@ -194,7 +217,6 @@ class Script: Identifiable, ObservableObject {
             }
         }.resume()
     }
-
 }
 
 /// 서버 API 응답을 위한 Codable 구조체
