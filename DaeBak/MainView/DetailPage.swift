@@ -12,7 +12,7 @@ import YouTubePlayerKit
 struct DetailPage: View {
     @State var script: Script
     @StateObject private var youTubePlayer = YouTubePlayer("") // YouTubePlayer 인스턴스 생성
-
+    
     var body: some View {
         VStack {
             Text(script.title)
@@ -20,6 +20,8 @@ struct DetailPage: View {
                 .fontWeight(.bold)
                 .foregroundColor(Color(red: 156 / 255, green: 102 / 255, blue: 68 / 255))
                 .multilineTextAlignment(.center)
+                .lineLimit(1) // 최대 2줄까지 표시
+                .truncationMode(.tail) // 끝부분에서 "..."으로 표시
                 .padding(.horizontal)
                 .frame(maxWidth: .infinity)
                 .background(
