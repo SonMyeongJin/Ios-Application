@@ -16,28 +16,44 @@ class Script: Identifiable, ObservableObject {
     var youtube_url: String
     var artist: String // 추가된 artist 속성
     
+    @Published var detailFileName: String = "testScript.json" // 기본값
+    
     init(title: String, script_KOR: String = "null", script_JPN: String = "null", youtube_url: String = "", artist: String = "Unknown") {
         self.title = title
         self.script_KOR = script_KOR
         self.script_JPN = script_JPN
         self.youtube_url = youtube_url
         self.artist = artist
+
+        fetchFileName() // 생성 시 파일명 가져오기
     }
     
-    /// 상세 정보 호출 시 사용할 파일명을 결정하는 computed property
-    var detailFileName: String {
-        if youtube_url.contains("6xz1bay-6dQ") {
-            return "BTS_2.json"
-        } else if youtube_url.contains("COcgp6xk76c") {
-            return "BTS_1.json"
-        } else if youtube_url.contains("kl-NaR9E8nA") {
-            return "BTS_3.json"
-        } else if youtube_url.contains("oK7LiJxmL84") {
-            return "BTS_4.json"
-        } else {
-            return "testScript" // fallback
+    /// 🎯 서버에서 JSON 리스트를 가져와서 youtube_url과 매칭되는 파일명을 찾아 설정하는 함수
+        func fetchFileName() {
+            guard let url = URL(string: "http://54.180.90.233:8080/api/list/\(artist)") else {
+                print("❌ 잘못된 API URL")
+                return
+            }
+            
+            URLSession.shared.dataTask(with: url) { data, response, error in
+                guard let data = data, error == nil else {
+                    print("❌ 데이터 요청 실패: \(error?.localizedDescription ?? "Unknown error")")
+                    return
+                }
+                
+                do {
+                    let fileList = try JSONDecoder().decode([ScriptListItem].self, from: data)
+                    
+                    if let matchingFile = fileList.first(where: { $0.youtube_url == self.youtube_url }) {
+                        DispatchQueue.main.async {
+                            self.detailFileName = "\(self.artist)_\(matchingFile.index).json"
+                        }
+                    }
+                } catch {
+                    print("❌ JSON 디코딩 실패: \(error)")
+                }
+            }.resume()
         }
-    }
     
     // MARK: - 스크립트 파싱 (시간 스탬프 포함)
     
@@ -216,6 +232,20 @@ class Script: Identifiable, ObservableObject {
                 completion([])
             }
         }.resume()
+    }
+    
+    struct ScriptListItem: Codable {
+        let title: String
+        let youtube_url: String
+        let artist: String
+        
+        /// 🔥 파일명을 만들기 위한 index 추출 함수
+        var index: String {
+            if let range = title.range(of: #"(\d+)$"#, options: .regularExpression) {
+                return String(title[range])
+            }
+            return "1" // 기본값
+        }
     }
 }
 

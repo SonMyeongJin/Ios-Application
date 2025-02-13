@@ -41,7 +41,7 @@ struct ScriptRowView: View {
                 .font(.headline)
                 .padding(.leading, 8)
                 .foregroundColor(Color(red: 156 / 255, green: 102 / 255, blue: 68 / 255))
-                .lineLimit(2)
+                .lineLimit(3)
 
             Spacer()
 
