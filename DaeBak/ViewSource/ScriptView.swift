@@ -119,7 +119,7 @@ struct ScriptView: View {
                     }
                     .padding()
                 }
-                .frame(height: 350)
+                .frame(height: 300)
                 .scriptBackground()
                 .onReceive(Timer.publish(every: 0.5, on: .main, in: .common).autoconnect()) { _ in
                     if autoScrollEnabled {

@@ -23,13 +23,14 @@ struct DetailPage: View {
             } else {
                 // 제목 뷰
                 Text(script.title)
-                    .font(.largeTitle)
+                    .font(.title)
                     .fontWeight(.bold)
                     .foregroundColor(Color(red: 156 / 255, green: 102 / 255, blue: 68 / 255))
                     .multilineTextAlignment(.center)
-                    .lineLimit(1)
+                    .lineLimit(2)
                     .truncationMode(.tail)
-                    .padding(.horizontal)
+                    .minimumScaleFactor(0.8) // 글자가 커서 두 줄도 안 들어갈 경우 크기를 80%까지 줄이기
+                    .padding(.horizontal,20)
                     .frame(maxWidth: .infinity)
                     .background(
                         RoundedRectangle(cornerRadius: 10)
