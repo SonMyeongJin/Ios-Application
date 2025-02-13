@@ -18,7 +18,11 @@ class Script: Identifiable, ObservableObject {
     
     @Published var detailFileName: String = "testScript.json" // 기본값
     
-    init(title: String, script_KOR: String = "null", script_JPN: String = "null", youtube_url: String = "", artist: String = "Unknown") {
+    init(title: String,
+         script_KOR: String = "null",
+         script_JPN: String = "null",
+         youtube_url: String = "",
+         artist: String = "Unknown") {
         self.title = title
         self.script_KOR = script_KOR
         self.script_JPN = script_JPN
@@ -28,36 +32,39 @@ class Script: Identifiable, ObservableObject {
         fetchFileName() // 생성 시 파일명 가져오기
     }
     
-    /// 🎯 서버에서 JSON 리스트를 가져와서 youtube_url과 매칭되는 파일명을 찾아 설정하는 함수
-        func fetchFileName() {
-            guard let url = URL(string: "http://54.180.90.233:8080/api/list/\(artist)") else {
-                print("❌ 잘못된 API URL")
+    /// 🎯 서버에서 JSON 리스트를 가져와서 youtube_url과 매칭되는 항목의 순서(index)를 사용하여 파일명을 생성하는 함수
+    /// (예: 배열에서 첫 번째 항목이면 "BTS_1.json", 두 번째면 "BTS_2.json")
+    func fetchFileName() {
+        guard let url = URL(string: "http://54.180.90.233:8080/api/list/\(artist)") else {
+            print("❌ 잘못된 API URL")
+            return
+        }
+        
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            guard let data = data, error == nil else {
+                print("❌ 데이터 요청 실패: \(error?.localizedDescription ?? "Unknown error")")
                 return
             }
             
-            URLSession.shared.dataTask(with: url) { data, response, error in
-                guard let data = data, error == nil else {
-                    print("❌ 데이터 요청 실패: \(error?.localizedDescription ?? "Unknown error")")
-                    return
-                }
+            do {
+                // 서버 응답에는 fileName 정보가 없으므로 ScriptListItem은 title, youtube_url, artist 만 포함합니다.
+                let fileList = try JSONDecoder().decode([ScriptListItem].self, from: data)
                 
-                do {
-                    let fileList = try JSONDecoder().decode([ScriptListItem].self, from: data)
-                    
-                    if let matchingFile = fileList.first(where: { $0.youtube_url == self.youtube_url }) {
-                        DispatchQueue.main.async {
-                            self.detailFileName = "\(self.artist)_\(matchingFile.index).json"
-                        }
+                if let matchingIndex = fileList.firstIndex(where: { $0.youtube_url == self.youtube_url }) {
+                    // 배열 인덱스는 0부터 시작하므로, 파일명에 사용할 index는 matchingIndex + 1
+                    let fileName = "\(self.artist)_\(matchingIndex + 1).json"
+                    DispatchQueue.main.async {
+                        self.detailFileName = fileName
                     }
-                } catch {
-                    print("❌ JSON 디코딩 실패: \(error)")
                 }
-            }.resume()
-        }
+            } catch {
+                print("❌ JSON 디코딩 실패: \(error)")
+            }
+        }.resume()
+    }
     
     // MARK: - 스크립트 파싱 (시간 스탬프 포함)
     
-    // 정규식 객체 미리 생성 (재사용)
     static let timeStampRegex: NSRegularExpression = {
         return try! NSRegularExpression(pattern: "\\(\\d{1,2}:\\d{2}\\)", options: [])
     }()
@@ -66,7 +73,7 @@ class Script: Identifiable, ObservableObject {
         return try! NSRegularExpression(pattern: "\\((\\d{1,2}):(\\d{2})\\)", options: [])
     }()
     
-    // **저장 프로퍼티**에 lazy 적용 (캐싱)
+    // 캐싱된 파싱 결과
     private lazy var cachedTimeStampedKOR: [(time: String, text: String)] = {
         return self.parseScript(self.script_KOR)
     }()
@@ -79,7 +86,6 @@ class Script: Identifiable, ObservableObject {
         return self.parseTimestamp(self.script_KOR)
     }()
     
-    // computed property (lazy 키워드 없이)로 캐싱된 값을 반환
     var timeStampedKOR: [(time: String, text: String)] {
         return cachedTimeStampedKOR
     }
@@ -92,7 +98,7 @@ class Script: Identifiable, ObservableObject {
         return cachedTimeStamps
     }
     
-    /// 스크립트 문자열에서 (MM:SS) 형태의 시간 스탬프를 찾아 분리합니다.
+    /// 스크립트에서 (MM:SS) 형태의 시간 스탬프와 텍스트를 분리
     private func parseScript(_ script: String) -> [(time: String, text: String)] {
         let lines = script.components(separatedBy: "\n")
         return lines.compactMap { line in
@@ -110,7 +116,7 @@ class Script: Identifiable, ObservableObject {
         }
     }
     
-    /// `(MM:SS)` 형태의 시간 스탬프를 초로 변환합니다.
+    /// 스크립트 내의 (MM:SS) 형태의 시간 스탬프를 초 단위로 변환
     private func parseTimestamp(_ script: String) -> [(time: String, seconds: Double)] {
         let nsString = script as NSString
         let results = Script.timeRegex.matches(in: script, options: [], range: NSRange(location: 0, length: nsString.length))
@@ -157,7 +163,7 @@ class Script: Identifiable, ObservableObject {
     
     // MARK: - 네트워크 API 호출
     
-    /// 상세 페이지 API 호출 (단일 스크립트)
+    /// 상세 스크립트 API 호출 (단일 스크립트)
     static func fetchDetail(fileName: String, completion: @escaping (Script?) -> Void) {
         let urlString = "http://54.180.90.233:8080/api/script/json?fileName=\(fileName)"
         guard let url = URL(string: urlString) else {
@@ -194,7 +200,7 @@ class Script: Identifiable, ObservableObject {
         }.resume()
     }
     
-    /// 목록 페이지 API 호출 (해당 아티스트의 스크립트 목록)
+    /// 목록 API 호출 (해당 아티스트의 스크립트 목록)
     static func fetchList(artist: String, completion: @escaping ([Script]) -> Void) {
         let urlString = "http://54.180.90.233:8080/api/list/\(artist)"
         guard let url = URL(string: urlString) else {
@@ -234,18 +240,11 @@ class Script: Identifiable, ObservableObject {
         }.resume()
     }
     
+    /// 서버 응답에는 fileName 정보가 없으므로 ScriptListItem은 title, youtube_url, artist 만 포함합니다.
     struct ScriptListItem: Codable {
         let title: String
         let youtube_url: String
         let artist: String
-        
-        /// 🔥 파일명을 만들기 위한 index 추출 함수
-        var index: String {
-            if let range = title.range(of: #"(\d+)$"#, options: .regularExpression) {
-                return String(title[range])
-            }
-            return "1" // 기본값
-        }
     }
 }
 
