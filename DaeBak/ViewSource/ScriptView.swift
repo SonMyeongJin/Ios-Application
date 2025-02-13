@@ -17,10 +17,39 @@ struct ScriptView: View {
     var body: some View {
         VStack {
             // 자동 스크롤 토글 스위치
-            Toggle("자동 스크롤", isOn: $autoScrollEnabled)
+            HStack {
+                Toggle(isOn: $autoScrollEnabled) {
+                    HStack(spacing: 8) {
+                        Image(systemName: autoScrollEnabled ? "arrow.triangle.2.circlepath.circle.fill" : "arrow.triangle.2.circlepath.circle")
+                            .font(.title2)
+                            .foregroundColor(autoScrollEnabled ? Color(red: 0.5, green: 0.4, blue: 0.3) : Color.gray)
+                        Text("Auto Scroll")
+                            .font(.headline)
+                            .fontWeight(.bold)
+                            .foregroundColor(Color(red: 0.5, green: 0.4, blue: 0.3))
+                    }
+                    .padding(.vertical, 8)
+                    .padding(.horizontal, 12)
+                    .background(
+                        // 부드러운 베이지 계열 그라데이션
+                        LinearGradient(
+                            gradient: Gradient(colors: [
+                                Color(red: 0.96, green: 0.93, blue: 0.87), // 밝은 베이지
+                                Color(red: 0.93, green: 0.89, blue: 0.80)  // 약간 어두운 베이지
+                            ]),
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        )
+                    )
+                    .cornerRadius(10)
+                    .shadow(color: Color.black.opacity(0.1), radius: 4, x: 2, y: 2)
+                }
                 .padding(.horizontal)
-                .padding(.top)
+            }
+            .padding(.top, 10)
 
+         
+            
             ScrollViewReader { proxy in
                 ScrollView {
                     ForEach(0..<max(script.timeStampedKOR.count, script.timeStampedJPN.count), id: \.self) { index in
@@ -90,7 +119,7 @@ struct ScriptView: View {
                     }
                     .padding()
                 }
-                .frame(height: 400)
+                .frame(height: 350)
                 .scriptBackground()
                 .onReceive(Timer.publish(every: 0.5, on: .main, in: .common).autoconnect()) { _ in
                     if autoScrollEnabled {
