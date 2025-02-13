@@ -11,61 +11,108 @@ import YouTubePlayerKit
 struct ScriptView: View {
     @State var script: Script
     @ObservedObject var youTubePlayer: YouTubePlayer // 외부에서 주입받은 YouTubePlayer
-    
+    @State private var autoScrollEnabled: Bool = false  // 자동 스크롤 on/off 토글
+    @State private var currentHighlightedIndex: Int? = nil // 현재 하이라이트된 인덱스
+
     var body: some View {
-        ScrollView {
-            ForEach(0..<max(script.timeStampedKOR.count, script.timeStampedJPN.count), id: \.self) { index in
-                HStack(alignment: .top, spacing: 8) {
-                    // 한국어 자막
-                    if script.timeStampedKOR.indices.contains(index) {
-                        let korScript = script.timeStampedKOR[index]
-                        
-                        VStack(alignment: .leading) {
-                            // 🎯 `script.timeStamps` 배열이 해당 index를 포함하는지 확인 후 버튼 추가
-                            if script.timeStamps.indices.contains(index) {
-                                let timestamp = script.timeStamps[index]
-                                Button(action: {
-                                    let timeMeasurement = Measurement(value: timestamp.seconds, unit: UnitDuration.seconds)
-                                    youTubePlayer.seek(to: timeMeasurement, allowSeekAhead: true) { result in
-                                        switch result {
-                                        case .success:
-                                            print("Moved to \(timestamp.time)")
-                                        case .failure(let error):
-                                            print("Error seeking: \(error)")
+        VStack {
+            // 자동 스크롤 토글 스위치
+            Toggle("자동 스크롤", isOn: $autoScrollEnabled)
+                .padding(.horizontal)
+                .padding(.top)
+
+            ScrollViewReader { proxy in
+                ScrollView {
+                    ForEach(0..<max(script.timeStampedKOR.count, script.timeStampedJPN.count), id: \.self) { index in
+                        HStack(alignment: .top, spacing: 8) {
+                            // 한국어 자막 영역
+                            if script.timeStampedKOR.indices.contains(index) {
+                                let korScript = script.timeStampedKOR[index]
+                                
+                                VStack(alignment: .leading) {
+                                    if script.timeStamps.indices.contains(index) {
+                                        let timestamp = script.timeStamps[index]
+                                        Button(action: {
+                                            let timeMeasurement = Measurement(value: timestamp.seconds, unit: UnitDuration.seconds)
+                                            youTubePlayer.seek(to: timeMeasurement, allowSeekAhead: true) { result in
+                                                switch result {
+                                                case .success:
+                                                    print("Moved to \(timestamp.time)")
+                                                case .failure(let error):
+                                                    print("Error seeking: \(error)")
+                                                }
+                                            }
+                                        }) {
+                                            Text(timestamp.time)
+                                                .font(.subheadline)
+                                                .foregroundColor(.gray)
                                         }
                                     }
-                                }) {
-                                    Text(timestamp.time) // ✅ 안전하게 접근 가능
-                                        .font(.subheadline)
-                                        .foregroundColor(.gray)
+                                    Text(korScript.text)
+                                        .foregroundColor(.blue)
                                 }
                             }
                             
-                            Text(korScript.text) // ✅ 한국어 자막
-                                .foregroundColor(.blue)
+                            Spacer()
+                            
+                            // 일본어 자막 영역
+                            if script.timeStampedJPN.indices.contains(index) {
+                                let jpnScript = script.timeStampedJPN[index]
+                                VStack(alignment: .trailing) {
+                                    if script.timeStamps.indices.contains(index) {
+                                        let timestamp = script.timeStamps[index]
+                                        Button(action: {
+                                            let timeMeasurement = Measurement(value: timestamp.seconds, unit: UnitDuration.seconds)
+                                            youTubePlayer.seek(to: timeMeasurement, allowSeekAhead: true) { result in
+                                                switch result {
+                                                case .success:
+                                                    print("Moved to \(timestamp.time)")
+                                                case .failure(let error):
+                                                    print("Error seeking: \(error)")
+                                                }
+                                            }
+                                        }) {
+                                            Text(timestamp.time)
+                                                .font(.subheadline)
+                                                .foregroundColor(.gray)
+                                        }
+                                    }
+                                    Text(jpnScript.text)
+                                        .foregroundColor(.red)
+                                }
+                            }
                         }
+                        .padding(.vertical, 4)
+                        .id(index) // 각 행에 id 부여 (ScrollViewReader에서 사용)
+                        .background(
+                            index == currentHighlightedIndex ? Color.yellow.opacity(0.3) : Color.clear
+                        )
                     }
-                    
-                    Spacer()
-                    
-                    // 일본어 자막
-                    if script.timeStampedJPN.indices.contains(index) {
-                        let jpnScript = script.timeStampedJPN[index]
-                        VStack(alignment: .trailing) {
-                            Text(jpnScript.time) // ✅ 일본어 타임스탬프
-                                .font(.subheadline)
-                                .foregroundColor(.gray)
-                            Text(jpnScript.text) // ✅ 일본어 자막
-                                .foregroundColor(.red)
+                    .padding()
+                }
+                .frame(height: 400)
+                .scriptBackground()
+                .onReceive(Timer.publish(every: 0.5, on: .main, in: .common).autoconnect()) { _ in
+                    if autoScrollEnabled {
+                        Task {
+                            do {
+                                // 현재 재생 시간을 Measurement<UnitDuration>으로 받아옴
+                                let currentTime = try await youTubePlayer.getCurrentTime()
+                                let currentTimeInSeconds = currentTime.converted(to: .seconds).value
+                                if let index = script.timeStamps.lastIndex(where: { $0.seconds <= currentTimeInSeconds }) {
+                                    withAnimation {
+                                        proxy.scrollTo(index, anchor: .center)
+                                        currentHighlightedIndex = index
+                                    }
+                                }
+                            } catch {
+                                print("Error fetching current time: \(error)")
+                            }
                         }
                     }
                 }
-                .padding(.vertical, 4)
             }
-            .padding()
         }
-        .frame(height: 400)
-        .scriptBackground()
     }
 }
 
@@ -77,9 +124,7 @@ struct ScriptView: View {
     
     let youTubePlayer = YouTubePlayer(
         source: .video(id: "dQw4w9WgXcQ"),
-        configuration: .init(
-            autoPlay: false
-        )
+        configuration: .init(autoPlay: false)
     )
     
     return ScriptView(script: testScripts[1], youTubePlayer: youTubePlayer)
