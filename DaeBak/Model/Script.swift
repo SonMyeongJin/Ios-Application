@@ -66,11 +66,17 @@ class Script: Identifiable, ObservableObject {
     // MARK: - 스크립트 파싱 (시간 스탬프 포함)
     
     static let timeStampRegex: NSRegularExpression = {
-        return try! NSRegularExpression(pattern: "\\(\\d{1,2}:\\d{2}\\)", options: [])
+        return try! NSRegularExpression(
+            pattern: "[\\(（]\\s*\\d{1,2}\\s*(?:[:\u{FF1A}])\\s*\\d{2}\\s*[\\)）]",
+            options: []
+        )
     }()
-    
+
     static let timeRegex: NSRegularExpression = {
-        return try! NSRegularExpression(pattern: "\\((\\d{1,2}):(\\d{2})\\)", options: [])
+        return try! NSRegularExpression(
+            pattern: "[\\(（]\\s*(\\d{1,2})\\s*(?:[:\u{FF1A}])\\s*(\\d{2})\\s*[\\)）]",
+            options: []
+        )
     }()
     
     // 캐싱된 파싱 결과
@@ -98,21 +104,22 @@ class Script: Identifiable, ObservableObject {
         return cachedTimeStamps
     }
     
-    /// 스크립트에서 (MM:SS) 형태의 시간 스탬프와 텍스트를 분리
     private func parseScript(_ script: String) -> [(time: String, text: String)] {
-        let lines = script.components(separatedBy: "\n")
-        return lines.compactMap { line in
-            let nsLine = line as NSString
-            let range = NSRange(location: 0, length: nsLine.length)
-            guard let match = Script.timeStampRegex.firstMatch(in: line, options: [], range: range) else {
-                return nil
-            }
-            if let swiftRange = Range(match.range, in: line) {
-                let time = String(line[swiftRange])
-                let text = line.replacingOccurrences(of: time, with: "").trimmingCharacters(in: .whitespaces)
-                return (time, text)
-            }
-            return nil
+        // 수정된 패턴: 여는 괄호 ( 또는 （, 닫는 괄호 ) 또는 ）,
+        // 시간 부분에서는 일반 콜론(:)과 전각 콜론(：) 모두 허용합니다.
+        let pattern = "([\\(（]\\s*\\d{1,2}\\s*(?:[:\u{FF1A}])\\s*\\d{2}\\s*[\\)）])(.*?)(?=[\\(（]\\s*\\d{1,2}\\s*(?:[:\u{FF1A}])\\s*\\d{2}\\s*[\\)）]|$)"
+        
+        guard let regex = try? NSRegularExpression(pattern: pattern, options: .dotMatchesLineSeparators) else {
+            return []
+        }
+        
+        let nsScript = script as NSString
+        let results = regex.matches(in: script, options: [], range: NSRange(location: 0, length: nsScript.length))
+        
+        return results.map { match in
+            let time = nsScript.substring(with: match.range(at: 1)).trimmingCharacters(in: .whitespacesAndNewlines)
+            let text = nsScript.substring(with: match.range(at: 2)).trimmingCharacters(in: .whitespacesAndNewlines)
+            return (time, text)
         }
     }
     
