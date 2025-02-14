@@ -255,6 +255,57 @@ class Script: Identifiable, ObservableObject {
     }
 }
 
+extension Script {
+    /// 한국어와 일본어 스크립트를 병합합니다.
+    /// - Parameter tolerance: 두 타임스탬프가 같은 시간대로 판단할 허용 오차 (초)
+    /// - Returns: (time, seconds, korText, jpnText) 튜플 배열
+    func mergeScripts(tolerance: Double = 1.0) -> [(time: String, seconds: Double, korText: String, jpnText: String)] {
+        // 두 언어의 파싱 결과
+        let korParsed = self.parseScript(self.script_KOR)    // [(time, text)]
+        let jpnParsed = self.parseScript(self.script_JPN)
+        let korTimes = self.parseTimestamp(self.script_KOR)  // [(time, seconds)]
+        let jpnTimes = self.parseTimestamp(self.script_JPN)
+        
+        var merged: [(time: String, seconds: Double, korText: String, jpnText: String)] = []
+        var i = 0
+        var j = 0
+        
+        while i < korParsed.count || j < jpnParsed.count {
+            if i < korParsed.count && j < jpnParsed.count {
+                let korSec = korTimes[i].seconds
+                let jpnSec = jpnTimes[j].seconds
+                let diff = abs(korSec - jpnSec)
+                
+                if diff < tolerance {
+                    // 같은 시간대로 판단 (한국어의 타임스탬프 사용)
+                    merged.append((time: korParsed[i].time, seconds: korSec, korText: korParsed[i].text, jpnText: jpnParsed[j].text))
+                    i += 1
+                    j += 1
+                } else if korSec < jpnSec {
+                    merged.append((time: korParsed[i].time, seconds: korSec, korText: korParsed[i].text, jpnText: ""))
+                    i += 1
+                } else {
+                    merged.append((time: jpnParsed[j].time, seconds: jpnSec, korText: "", jpnText: jpnParsed[j].text))
+                    j += 1
+                }
+            } else if i < korParsed.count {
+                merged.append((time: korParsed[i].time, seconds: korTimes[i].seconds, korText: korParsed[i].text, jpnText: ""))
+                i += 1
+            } else if j < jpnParsed.count {
+                merged.append((time: jpnParsed[j].time, seconds: jpnTimes[j].seconds, korText: "", jpnText: jpnParsed[j].text))
+                j += 1
+            }
+        }
+        return merged
+    }
+    
+    /// 병합된 스크립트를 바로 사용할 수 있도록 한 계산 프로퍼티
+    var mergedScript: [(time: String, seconds: Double, korText: String, jpnText: String)] {
+        return mergeScripts()
+    }
+}
+
+
 /// 서버 API 응답을 위한 Codable 구조체
 struct DecodableScript: Codable {
     let title: String

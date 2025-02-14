@@ -31,11 +31,10 @@ struct ScriptView: View {
                     .padding(.vertical, 8)
                     .padding(.horizontal, 12)
                     .background(
-                        // 부드러운 베이지 계열 그라데이션
                         LinearGradient(
                             gradient: Gradient(colors: [
-                                Color(red: 0.96, green: 0.93, blue: 0.87), // 밝은 베이지
-                                Color(red: 0.93, green: 0.89, blue: 0.80)  // 약간 어두운 베이지
+                                Color(red: 0.96, green: 0.93, blue: 0.87),
+                                Color(red: 0.93, green: 0.89, blue: 0.80)
                             ]),
                             startPoint: .leading,
                             endPoint: .trailing
@@ -47,75 +46,59 @@ struct ScriptView: View {
                 .padding(.horizontal)
             }
             .padding(.top, 10)
-
-         
             
             ScrollViewReader { proxy in
                 ScrollView {
-                    ForEach(0..<max(script.timeStampedKOR.count, script.timeStampedJPN.count), id: \.self) { index in
+                    // mergedScript 배열을 인덱스와 함께 사용
+                    ForEach(Array(script.mergedScript.enumerated()), id: \.offset) { index, line in
                         HStack(alignment: .top, spacing: 8) {
-                            // 한국어 자막 영역
-                            if script.timeStampedKOR.indices.contains(index) {
-                                let korScript = script.timeStampedKOR[index]
-                                
-                                VStack(alignment: .leading) {
-                                    if script.timeStamps.indices.contains(index) {
-                                        let timestamp = script.timeStamps[index]
-                                        Button(action: {
-                                            let timeMeasurement = Measurement(value: timestamp.seconds, unit: UnitDuration.seconds)
-                                            youTubePlayer.seek(to: timeMeasurement, allowSeekAhead: true) { result in
-                                                switch result {
-                                                case .success:
-                                                    print("Moved to \(timestamp.time)")
-                                                case .failure(let error):
-                                                    print("Error seeking: \(error)")
-                                                }
-                                            }
-                                        }) {
-                                            Text(timestamp.time)
-                                                .font(.subheadline)
-                                                .foregroundColor(.gray)
+                            // 왼쪽: 한국어 영역
+                            VStack(alignment: .leading) {
+                                Button(action: {
+                                    let timeMeasurement = Measurement(value: line.seconds, unit: UnitDuration.seconds)
+                                    youTubePlayer.seek(to: timeMeasurement, allowSeekAhead: true) { result in
+                                        switch result {
+                                        case .success:
+                                            print("Moved to \(line.time)")
+                                        case .failure(let error):
+                                            print("Error seeking: \(error)")
                                         }
                                     }
-                                    Text(korScript.text)
-                                        .foregroundColor(.blue)
+                                }) {
+                                    Text(line.time)
+                                        .font(.subheadline)
+                                        .foregroundColor(.gray)
                                 }
+                                Text(line.korText)
+                                    .foregroundColor(.blue)
                             }
                             
                             Spacer()
                             
-                            // 일본어 자막 영역
-                            if script.timeStampedJPN.indices.contains(index) {
-                                let jpnScript = script.timeStampedJPN[index]
-                                VStack(alignment: .trailing) {
-                                    if script.timeStamps.indices.contains(index) {
-                                        let timestamp = script.timeStamps[index]
-                                        Button(action: {
-                                            let timeMeasurement = Measurement(value: timestamp.seconds, unit: UnitDuration.seconds)
-                                            youTubePlayer.seek(to: timeMeasurement, allowSeekAhead: true) { result in
-                                                switch result {
-                                                case .success:
-                                                    print("Moved to \(timestamp.time)")
-                                                case .failure(let error):
-                                                    print("Error seeking: \(error)")
-                                                }
-                                            }
-                                        }) {
-                                            Text(timestamp.time)
-                                                .font(.subheadline)
-                                                .foregroundColor(.gray)
+                            // 오른쪽: 일본어 영역
+                            VStack(alignment: .trailing) {
+                                Button(action: {
+                                    let timeMeasurement = Measurement(value: line.seconds, unit: UnitDuration.seconds)
+                                    youTubePlayer.seek(to: timeMeasurement, allowSeekAhead: true) { result in
+                                        switch result {
+                                        case .success:
+                                            print("Moved to \(line.time)")
+                                        case .failure(let error):
+                                            print("Error seeking: \(error)")
                                         }
                                     }
-                                    Text(jpnScript.text)
-                                        .foregroundColor(.red)
+                                }) {
+                                    Text(line.time)
+                                        .font(.subheadline)
+                                        .foregroundColor(.gray)
                                 }
+                                Text(line.jpnText)
+                                    .foregroundColor(.red)
                             }
                         }
                         .padding(.vertical, 4)
                         .id(index) // 각 행에 id 부여 (ScrollViewReader에서 사용)
-                        .background(
-                            index == currentHighlightedIndex ? Color.yellow.opacity(0.3) : Color.clear
-                        )
+                        .background(index == currentHighlightedIndex ? Color.yellow.opacity(0.3) : Color.clear)
                     }
                     .padding()
                 }
@@ -125,10 +108,9 @@ struct ScriptView: View {
                     if autoScrollEnabled {
                         Task {
                             do {
-                                // 현재 재생 시간을 Measurement<UnitDuration>으로 받아옴
                                 let currentTime = try await youTubePlayer.getCurrentTime()
                                 let currentTimeInSeconds = currentTime.converted(to: .seconds).value
-                                if let index = script.timeStamps.lastIndex(where: { $0.seconds <= currentTimeInSeconds }) {
+                                if let index = script.mergedScript.lastIndex(where: { $0.seconds <= currentTimeInSeconds }) {
                                     withAnimation {
                                         proxy.scrollTo(index, anchor: .center)
                                         currentHighlightedIndex = index
