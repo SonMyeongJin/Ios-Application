@@ -16,7 +16,7 @@ struct DetailPage: View {
     var body: some View {
         VStack {
             if isLoadingDetail {
-                ProgressView("상세 정보 로딩중...")
+                ProgressView("Loading...")
                     .onAppear {
                         loadDetail()
                     }
@@ -43,7 +43,7 @@ struct DetailPage: View {
                 YoutubeView(youtubeURL: script.youtube_url, youTubePlayer: youTubePlayer)
                 
                 // "자막" 제목
-                Text("자막")
+                Text("[韓国語 - 日本語] 字幕")
                     .font(.headline)
                     .foregroundColor(Color(red: 156 / 255, green: 102 / 255, blue: 68 / 255))
                     .multilineTextAlignment(.center)

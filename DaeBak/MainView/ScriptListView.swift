@@ -20,7 +20,7 @@ struct ScriptListView: View {
     var body: some View {
         VStack {
             if isLoading {
-                ProgressView("로딩중...")
+                ProgressView("Loading...")
                     .onAppear {
                         loadScripts()
                     }
@@ -29,18 +29,26 @@ struct ScriptListView: View {
                     // 모든 목록 탭 (네트워크에서 가져온 전체 스크립트)
                     ListView(scripts: scripts)
                         .tabItem {
-                            Label("모든 목록", systemImage: "list.bullet")
+                            Label("All List", systemImage: "list.bullet")
                         }
                         .tag(Tab.allScripts)
                     
                     // 즐겨찾기 탭 (FavoritesManager를 통해 필터링; 기존 기능 활용)
                     ListView(scripts: FavoritesManager.favoriteScripts(from: scripts))
                         .tabItem {
-                            Label("즐겨찾기", systemImage: "heart.fill")
+                            Label("Favorites", systemImage: "heart.fill")
                         }
                         .tag(Tab.favorites)
                 }
-                .navigationTitle("\(artist.rawValue)의 스크립트 목록")
+                .navigationTitle("\(artist.rawValue)の話")
+                .toolbar {
+                    ToolbarItem(placement: .principal) { // 중앙 정렬
+                        Text("[\(artist.rawValue)]の話")
+                            .font(.system(size: 24, weight: .bold)) // 폰트 크기 & 굵기 조절
+                            .foregroundColor(Color(red: 156 / 255, green: 102 / 255, blue: 68 / 255)) // 원하는 색상 적용
+                    }
+                }
+
             }
         }
     }

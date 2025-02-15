@@ -12,8 +12,8 @@ struct ArtistListView: View {
         NavigationView {
             VStack {
                 // 제목 뷰 (TitleView는 기존에 정의된 뷰로 가정)
-                TitleView(title: "KPOP 인기순위")
-                
+                TitleView(title: "K-POP の 魅力")
+                 
                 ScrollView {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 120))], spacing: 50) {
                         ForEach(Artist.allCases) { artist in
