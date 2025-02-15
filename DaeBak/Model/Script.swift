@@ -50,7 +50,12 @@ class Script: Identifiable, ObservableObject {
                 // 서버 응답에는 fileName 정보가 없으므로 ScriptListItem은 title, youtube_url, artist 만 포함합니다.
                 let fileList = try JSONDecoder().decode([ScriptListItem].self, from: data)
                 
-                if let matchingIndex = fileList.firstIndex(where: { $0.youtube_url == self.youtube_url }) {
+                // fileList를 자연 정렬(Natural Sort) 적용
+                let sortedFileList = fileList.sorted {
+                    $0.title.localizedStandardCompare($1.title) == .orderedAscending
+                }
+                
+                if let matchingIndex = sortedFileList.firstIndex(where: { $0.youtube_url == self.youtube_url }) {
                     // 배열 인덱스는 0부터 시작하므로, 파일명에 사용할 index는 matchingIndex + 1
                     let fileName = "\(self.artist)_\(matchingIndex + 1).json"
                     DispatchQueue.main.async {
@@ -62,6 +67,8 @@ class Script: Identifiable, ObservableObject {
             }
         }.resume()
     }
+
+
     
     // MARK: - 스크립트 파싱 (시간 스탬프 포함)
     
@@ -305,6 +312,13 @@ extension Script {
     }
 }
 
+// 숫자를 문자열에서 추출하는 헬퍼 함수
+func extractNumber(from text: String) -> Int {
+    // 문자열에서 모든 숫자 문자를 추출해서 하나의 문자열로 만든 후 정수로 변환
+    let digits = text.compactMap { $0.wholeNumberValue }
+    let numberString = digits.map(String.init).joined()
+    return Int(numberString) ?? 0
+}
 
 /// 서버 API 응답을 위한 Codable 구조체
 struct DecodableScript: Codable {

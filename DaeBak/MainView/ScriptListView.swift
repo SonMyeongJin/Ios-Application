@@ -45,15 +45,28 @@ struct ScriptListView: View {
         }
     }
     
-    /// 선택한 아티스트의 스크립트 목록을 네트워크에서 로드합니다.
     private func loadScripts() {
         Script.fetchList(artist: artist.rawValue) { fetchedScripts in
             DispatchQueue.main.async {
-                self.scripts = fetchedScripts
+                self.scripts = fetchedScripts.sorted {
+                    $0.title.localizedStandardCompare($1.title) == .orderedAscending
+                }
                 self.isLoading = false
             }
         }
     }
+
+
+    /// 제목에서 숫자를 추출하는 헬퍼 함수
+    private func extractNumber(from title: String) -> Int {
+        // 정규 표현식으로 첫 번째 등장하는 숫자 추출
+        if let range = title.range(of: "\\d+", options: .regularExpression) {
+            let numberString = String(title[range])
+            return Int(numberString) ?? 0
+        }
+        return 0
+    }
+
     
     /// 스크립트 목록을 표시하는 하위 뷰
     private struct ListView: View {
