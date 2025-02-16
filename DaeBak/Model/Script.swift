@@ -47,12 +47,12 @@ class Script: Identifiable, ObservableObject {
             }
             
             do {
-                // 서버 응답에는 fileName 정보가 없으므로 ScriptListItem은 title, youtube_url, artist 만 포함합니다.
+                // 서버 응답에는 fileName 정보가 없으므로 ScriptListItem은 title, youtube_url, artist만 포함합니다.
                 let fileList = try JSONDecoder().decode([ScriptListItem].self, from: data)
                 
-                // fileList를 자연 정렬(Natural Sort) 적용
-                let sortedFileList = fileList.sorted {
-                    $0.title.localizedStandardCompare($1.title) == .orderedAscending
+                // 파일명에서 번호를 추출하여 오름차순 정렬 (목록 정렬과 동일한 기준 사용)
+                let sortedFileList = fileList.sorted { lhs, rhs in
+                    self.extractFileNumber(from: lhs.title) < self.extractFileNumber(from: rhs.title)
                 }
                 
                 if let matchingIndex = sortedFileList.firstIndex(where: { $0.youtube_url == self.youtube_url }) {
@@ -67,6 +67,22 @@ class Script: Identifiable, ObservableObject {
             }
         }.resume()
     }
+    // Script.swift 내부에 추가 (fetchFileName()와 함께 사용)
+    private func extractFileNumber(from title: String) -> Int {
+        // 파일명이 "BTS_17.json" 형식이라고 가정
+        let pattern = "(?<=_)(\\d+)(?=\\.json)"
+        guard let regex = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive) else {
+            return 0
+        }
+        let nsTitle = title as NSString
+        if let match = regex.firstMatch(in: title, options: [], range: NSRange(location: 0, length: nsTitle.length)) {
+            if let range = Range(match.range(at: 1), in: title) {
+                return Int(title[range]) ?? 0
+            }
+        }
+        return 0
+    }
+
 
 
     
@@ -319,6 +335,8 @@ func extractNumber(from text: String) -> Int {
     let numberString = digits.map(String.init).joined()
     return Int(numberString) ?? 0
 }
+
+
 
 /// 서버 API 응답을 위한 Codable 구조체
 struct DecodableScript: Codable {

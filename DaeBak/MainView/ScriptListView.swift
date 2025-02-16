@@ -56,8 +56,9 @@ struct ScriptListView: View {
     private func loadScripts() {
         Script.fetchList(artist: artist.rawValue) { fetchedScripts in
             DispatchQueue.main.async {
-                self.scripts = fetchedScripts.sorted {
-                    $0.title.localizedStandardCompare($1.title) == .orderedAscending
+                // extractNumber 함수를 사용하여 정수 값 기준으로 정렬
+                self.scripts = fetchedScripts.sorted { script1, script2 in
+                    extractNumber(from: script1.title) < extractNumber(from: script2.title)
                 }
                 self.isLoading = false
             }
@@ -65,15 +66,22 @@ struct ScriptListView: View {
     }
 
 
+
+
     /// 제목에서 숫자를 추출하는 헬퍼 함수
     private func extractNumber(from title: String) -> Int {
-        // 정규 표현식으로 첫 번째 등장하는 숫자 추출
-        if let range = title.range(of: "\\d+", options: .regularExpression) {
+        // 파일명이 "BTS_17.json"과 같이 되어 있다고 가정하고, "_" 다음의 숫자만 추출합니다.
+        let pattern = "_(\\d+)"
+        if let regex = try? NSRegularExpression(pattern: pattern),
+           let match = regex.firstMatch(in: title, range: NSRange(title.startIndex..., in: title)),
+           let range = Range(match.range(at: 1), in: title) {
             let numberString = String(title[range])
             return Int(numberString) ?? 0
         }
         return 0
     }
+
+
 
     
     /// 스크립트 목록을 표시하는 하위 뷰
