@@ -25,6 +25,7 @@
 		CB524FB42D42460000794AB4 /* MarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB524FB32D42460000794AB4 /* MarkView.swift */; };
 		CB6337F62D48C3DE00E20BA9 /* TimestampView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6337F52D48C3DE00E20BA9 /* TimestampView.swift */; };
 		CB7834942D395772006D8379 /* YouTubePlayerKit in Frameworks */ = {isa = PBXBuildFile; productRef = CB7834932D395772006D8379 /* YouTubePlayerKit */; };
+		CBB3CC0D2D82C430007B15A3 /* RequestFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB3CC0C2D82C41E007B15A3 /* RequestFormView.swift */; };
 		CBF97A3D2D4E188F007FC41A /* StartLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF97A3C2D4E188F007FC41A /* StartLoadingView.swift */; };
 		CBF97A4B2D4F163E007FC41A /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF97A4A2D4F163E007FC41A /* Color.swift */; };
 /* End PBXBuildFile section */
@@ -66,6 +67,7 @@
 		CB524FB12D415AE800794AB4 /* YoutubeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubeView.swift; sourceTree = "<group>"; };
 		CB524FB32D42460000794AB4 /* MarkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkView.swift; sourceTree = "<group>"; };
 		CB6337F52D48C3DE00E20BA9 /* TimestampView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimestampView.swift; sourceTree = "<group>"; };
+		CBB3CC0C2D82C41E007B15A3 /* RequestFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestFormView.swift; sourceTree = "<group>"; };
 		CBC69AC22D3516EA0007B350 /* DaeBak.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DaeBak.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CBC69AD62D3516EB0007B350 /* DaeBakTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DaeBakTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CBC69AE02D3516EB0007B350 /* DaeBakUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DaeBakUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -145,6 +147,7 @@
 		CB524F9C2D40F7B900794AB4 /* ViewSource */ = {
 			isa = PBXGroup;
 			children = (
+				CBB3CC0C2D82C41E007B15A3 /* RequestFormView.swift */,
 				CB0358192D522E4800219898 /* ScriptView2.swift */,
 				CB524F9A2D40F7B900794AB4 /* ScriptView.swift */,
 				CB3F62952D44DEDC00F51318 /* ScriptRowView.swift */,
@@ -355,6 +358,7 @@
 				CB524FAE2D40FA3D00794AB4 /* Artist.swift in Sources */,
 				CB6337F62D48C3DE00E20BA9 /* TimestampView.swift in Sources */,
 				CB03581A2D522E5300219898 /* ScriptView2.swift in Sources */,
+				CBB3CC0D2D82C430007B15A3 /* RequestFormView.swift in Sources */,
 				CB3F62902D44CC2B00F51318 /* TitleView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
