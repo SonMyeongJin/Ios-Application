@@ -10,10 +10,23 @@ import MessageUI
 
 struct ArtistListView: View {
     @State private var isRequestSheetPresented: Bool = false
+    @AppStorage("isDarkMode") private var isDarkMode: Bool = false
     
     var body: some View {
         NavigationView {
             VStack {
+                
+                // 다크모드 토글 스위치
+                HStack {
+                    Spacer()
+                    Toggle(isOn: $isDarkMode) {
+                        Image(systemName: isDarkMode ? "moon.fill" : "sun.max.fill")
+                            .foregroundColor(isDarkMode ? .yellow : .orange)
+                    }
+                    .toggleStyle(SwitchToggleStyle(tint: .brown))
+                    .padding(.trailing, 20)
+                }
+                
                 // 제목 뷰 (TitleView는 기존에 정의된 뷰로 가정)
                 TitleView(title: "K-POP の 魅力")
                 
