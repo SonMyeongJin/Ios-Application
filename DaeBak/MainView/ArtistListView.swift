@@ -17,15 +17,30 @@ struct ArtistListView: View {
             VStack {
                 
                 // 다크모드 토글 스위치
-                HStack {
-                    Spacer()
+                HStack(spacing: 6) {
+                    Text("Dark Mode")
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
                     Toggle(isOn: $isDarkMode) {
                         Image(systemName: isDarkMode ? "moon.fill" : "sun.max.fill")
                             .foregroundColor(isDarkMode ? .yellow : .orange)
                     }
                     .toggleStyle(SwitchToggleStyle(tint: .brown))
-                    .padding(.trailing, 20)
+                    .frame(width: 60)
                 }
+                .padding(.vertical, 3)
+                .padding(.horizontal, 10)
+                .background(
+                    RoundedRectangle(cornerRadius: 16, style: .continuous)
+                        .fill(Color(.systemGray6).opacity(0.7))
+                )
+                .overlay(
+                    RoundedRectangle(cornerRadius: 16, style: .continuous)
+                        .stroke(Color.brown.opacity(0.4), lineWidth: 1)
+                )
+                .frame(maxWidth: .infinity, alignment: .trailing)
+                .padding(.top, 1)
+                .padding(.trailing, 10)
                 
                 // 제목 뷰 (TitleView는 기존에 정의된 뷰로 가정)
                 TitleView(title: "K-POP の 魅力")
