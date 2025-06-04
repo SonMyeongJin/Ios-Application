@@ -48,7 +48,7 @@ struct ScriptListView: View {
                             .foregroundColor(Color(red: 156 / 255, green: 102 / 255, blue: 68 / 255)) // 원하는 색상 적용
                     }
                 }
-
+                
             }
         }
     }
@@ -64,10 +64,10 @@ struct ScriptListView: View {
             }
         }
     }
-
-
-
-
+    
+    
+    
+    
     /// 제목에서 숫자를 추출하는 헬퍼 함수
     private func extractNumber(from title: String) -> Int {
         // 파일명이 "BTS_17.json"과 같이 되어 있다고 가정하고, "_" 다음의 숫자만 추출합니다.
@@ -80,9 +80,9 @@ struct ScriptListView: View {
         }
         return 0
     }
-
-
-
+    
+    
+    
     
     /// 스크립트 목록을 표시하는 하위 뷰
     private struct ListView: View {
