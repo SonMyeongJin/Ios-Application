@@ -11,10 +11,11 @@ struct TitleView: View {
     let title: String
     
     var body: some View {
-        Image("Mark") 
+        Image("Mark")
             .resizable()
             .scaledToFit()
-            .frame(width: 100, height: 100)
+            .frame(width: 120, height: 120)
+            .clipShape(RoundedRectangle(cornerRadius: 30, style: .continuous))
             .padding(.bottom, -20)
         
         Text(title)
