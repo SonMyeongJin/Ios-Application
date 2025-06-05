@@ -29,9 +29,9 @@ struct DetailPage: View {
                             YoutubeView(youtubeURL: script.youtube_url, youTubePlayer: youTubePlayer)
                                 .frame(width: geometry.size.width * 0.55, height: geometry.size.height * 0.7)
                                 .clipped()
-                            ScriptView(script: script, youTubePlayer: youTubePlayer)
+                            ScriptView(script: script, youTubePlayer: youTubePlayer, fixedWidth: geometry.size.width * 0.4)
                                 .border(Color.gray, width: 6)
-                                .frame(width: geometry.size.width * 0.4, height: geometry.size.height * 0.8)
+                                .frame(height: geometry.size.height * 0.8)
                         }
                     } else {
                         // 세로모드

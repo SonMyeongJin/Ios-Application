@@ -13,6 +13,7 @@ struct ScriptView: View {
     @ObservedObject var youTubePlayer: YouTubePlayer // 외부에서 주입받은 YouTubePlayer
     @State private var autoScrollEnabled: Bool = false  // 자동 스크롤 on/off 토글
     @State private var currentHighlightedIndex: Int? = nil // 현재 하이라이트된 인덱스
+    var fixedWidth: CGFloat? = nil // 가로모드에서 정확한 width를 지정할 수 있도록 추가
 
     var body: some View {
         VStack {
@@ -100,9 +101,11 @@ struct ScriptView: View {
                         .id(index) // 각 행에 id 부여 (ScrollViewReader에서 사용)
                         .background(index == currentHighlightedIndex ? Color.yellow.opacity(0.3) : Color.clear)
                     }
-                    .padding()
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 8)
                 }
                 .frame(height: 300)
+                .frame(width: fixedWidth)
                 .scriptBackground()
                 .onReceive(Timer.publish(every: 0.5, on: .main, in: .common).autoconnect()) { _ in
                     if autoScrollEnabled {

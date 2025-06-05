@@ -37,7 +37,6 @@ struct ScriptBackground: ViewModifier {
     func body(content: Content) -> some View {
         ZStack {
             (isDarkMode ? Color(red: 105/255, green: 95/255, blue: 85/255) : Color(red: 205 / 255, green: 190 / 255, blue: 176 / 255))
-                .edgesIgnoringSafeArea(.all)
             content
         }
     }
