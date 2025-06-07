@@ -127,6 +127,7 @@ struct ScriptView: View {
                 }
             }
         }
+        .frame(maxHeight: .infinity, alignment: .top)
     }
 }
 
